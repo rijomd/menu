@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 
-import { PageOutLine, PageActions } from "Components/OutLine/PageOutLine";
+import { PageOutLine } from "Components/OutLine/PageOutLine";
 import { Modal } from 'Components/Modals/Modal';
 
 import { UserForm } from "../Components/UserForm";

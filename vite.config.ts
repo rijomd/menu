@@ -19,6 +19,7 @@ export default defineConfig({
       'Modules': resolve(root, 'Modules'),
       'Services': resolve(root, 'Services'),
       'Themes': resolve(root, 'Themes'),
+      'Utils': resolve(root, 'Utils'),
     },
   },
 });

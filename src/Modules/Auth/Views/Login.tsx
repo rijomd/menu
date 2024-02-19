@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import { Divider, Grid, Stack, Typography, useMediaQuery } from "@mui/material";
 import { ToastContainer } from "react-toastify";
@@ -66,11 +66,7 @@ const Login = () => {
                   alignItems="center"
                   justifyContent="center"
                 >
-                  <Grid item sx={{ mb: 3 }}>
-                    <Link to="#">
-                      <Logo />
-                    </Link>
-                  </Grid>
+                  <Grid item ><Logo /></Grid>
 
                   <Grid item xs={12}>
                     <Grid

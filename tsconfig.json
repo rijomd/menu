@@ -28,6 +28,7 @@
       "Modules/*":["./src/Modules/*"],
       "Services/*":["./src/Services/*"],
       "Themes/*":["./src/Themes/*"],
+      "Utils/*":["./src/Utils/*"],
     }
   },
   "include": ["src"],

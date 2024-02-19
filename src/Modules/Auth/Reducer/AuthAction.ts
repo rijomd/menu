@@ -5,15 +5,16 @@ import { RootState } from "../../../Services/Store/Store";
 import axios from "../../../Services/Request";
 
 import { loginUrl } from "../Config/urlConstants";
-import { AUTH_USER, ACCESS_TOKEN } from "Services/Methods/AuthMethods";
+import { AUTH_USER, ACCESS_TOKEN, encryptUser } from "Services/Methods/AuthMethods";
 
 export const authenticationState = (state: RootState) => state.auth;
 
 export const loginAction = createAsyncThunk(
   "authentication/loginAction",
   async (body: any, thunkAPI) => {
+    const encryptedCredentials = encryptUser(body);
     try {
-      const response: any = await axios.post<any>(loginUrl, body);
+      const response: any = await axios.post<any>(loginUrl, { encryptedCredentials },);
       if (response.statusText !== "OK") {
         throw new Error(`HTTP error! Status: ${response.status || "590"}`);
       }

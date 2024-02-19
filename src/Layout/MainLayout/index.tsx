@@ -8,7 +8,6 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { Header } from './Header';
 import { Sidebar } from './Sidebar';
 import navigation from '../../MenuItems';
-import { Customization } from '../Customization';
 
 import { Breadcrumbs } from 'Components/Extend/Breadcrumbs';
 import { getCustomizationState, setOpenDrawerAction } from "Themes/Reducer/customizationActions";
@@ -101,7 +100,6 @@ export const MainLayout = () => {
 
       <Main leftDrawerOpened={leftDrawerOpened} content={content} />
 
-      <Customization />
     </Box>
   );
 };
