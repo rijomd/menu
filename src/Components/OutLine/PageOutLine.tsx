@@ -1,13 +1,12 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
+
 import { styled, useTheme } from '@mui/material/styles';
 import { Typography, Link, useMediaQuery, Backdrop, Grid, Divider, Tooltip } from '@mui/material';
 import DisabledByDefaultIcon from '@mui/icons-material/DisabledByDefault';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
 import PerfectScrollbar from 'react-perfect-scrollbar';
-
-// import { getCustomizationState } from "Themes/Reducer/customizationActions";
-// import { useAppSelector } from "Services/Hook/Hook";
 
 import { PageLoader } from 'Components/Loader/PageLoader';
 import { TableActions, TypeActions } from 'Components/Table/Components/TableActions';
@@ -36,8 +35,8 @@ type TypePageOutLine = {
 
 export const MemorizedPageOutLine = ({ children, isLoading = false, title, actions = [], draggableRef, fullScreen = false, onAction = () => { } }: TypePageOutLine) => {
     const theme = useTheme();
-    // const customization = useAppSelector(getCustomizationState);
     const matchUpMd = useMediaQuery(theme.breakpoints.up('md'));
+    const location = useLocation();
 
     const PageWrapper = styled('div')(({ theme }) => ({
         height: !matchUpMd ? 'calc(100vh - 100px)' : 'calc(100vh - 130px)',
@@ -45,9 +44,8 @@ export const MemorizedPageOutLine = ({ children, isLoading = false, title, actio
         overflow: 'hidden',
         padding: '8px',
         background: theme.palette.background.default,
-        minHeight: fullScreen ? '100vh' : '80vh',
+        minHeight: fullScreen ? '100vh' : (location.pathname.includes('dashboard') ? '85vh' : '80vh'),
         border: '3px solid #ccc'
-        // ...customization.pageStyle,
     }));
 
     return (

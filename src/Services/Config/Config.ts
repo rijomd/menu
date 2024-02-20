@@ -9,10 +9,10 @@ export type TypeConfig = {
 }
 
 export const config: TypeConfig = {
-    basename: '/menu',
+    basename: '/menuKart',
     defaultPath: '/dashboard1',
     fontFamily: `'Roboto', sans-serif`,
     borderRadius: 4
 };
 
-export const REACT_APP_VERSION: string = "Version - 1.0";
+export const REACT_APP_VERSION: string = "Version - 1.0.0";

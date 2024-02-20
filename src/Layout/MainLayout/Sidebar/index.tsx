@@ -6,7 +6,8 @@ import { BrowserView, MobileView } from 'react-device-detect';
 
 import MenuList from './MenuList';
 import { LogoSection } from '../LogoSection';
-import { MenuCard } from './MenuCard';
+import { UpgradePlanCard } from './Extra/UpgradePlanCard';
+
 import { drawerWidth } from 'Services/Store/GridConstant';
 import { REACT_APP_VERSION } from 'Services/Config/Config';
 
@@ -37,7 +38,7 @@ export const Sidebar = ({ drawerOpen, drawerToggle = () => { }, window }: TypeSi
           }}
         >
           <MenuList />
-          <MenuCard />
+          <UpgradePlanCard />
           <Stack direction="row" justifyContent="center" sx={{ mb: 2 }}>
             <Chip label={REACT_APP_VERSION} disabled color="secondary" size="small" sx={{ cursor: 'pointer' }} />
           </Stack>
@@ -46,7 +47,7 @@ export const Sidebar = ({ drawerOpen, drawerToggle = () => { }, window }: TypeSi
       <MobileView>
         <Box sx={{ px: 2 }}>
           <MenuList />
-          <MenuCard />
+          <UpgradePlanCard />
           <Stack direction="row" justifyContent="center" sx={{ mb: 2 }}>
             <Chip label={REACT_APP_VERSION} disabled color="secondary" size="small" sx={{ cursor: 'pointer' }} />
           </Stack>

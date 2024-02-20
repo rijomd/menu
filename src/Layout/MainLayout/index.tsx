@@ -15,11 +15,13 @@ import { getCustomizationState, setOpenDrawerAction } from "Themes/Reducer/custo
 import { drawerWidth } from 'Services/Store/GridConstant';
 import { useAppDispatch, useAppSelector } from "Services/Hook/Hook";
 
+import image from 'Assets/Images/background-image.jpg';
+
 const MainStyled = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, leftDrawerOpened }: { theme: any, leftDrawerOpened: boolean }) => ({
   ...theme.typography.body1,
   borderBottomLeftRadius: 0,
   borderBottomRightRadius: 0,
-  marginTop: 88,
+  marginTop: 74,
   transition: theme.transitions.create(
     'margin',
     leftDrawerOpened
@@ -90,7 +92,7 @@ export const MainLayout = () => {
           transition: leftDrawerOpened ? theme.transitions.create('width') : 'none'
         }}
       >
-        <Toolbar>
+        <Toolbar sx={{ backgroundImage: `url(${image})` }}>
           <Header handleLeftDrawerToggle={handleLeftDrawerToggle} />
         </Toolbar>
       </AppBar>

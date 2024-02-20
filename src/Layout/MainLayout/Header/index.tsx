@@ -3,10 +3,8 @@ import WidgetsIcon from '@mui/icons-material/Widgets';
 import { useTheme } from '@mui/material/styles';
 
 import { LogoSection } from '../LogoSection';
-import { SearchSection } from './SearchSection';
 import { ProfileSection } from './ProfileSection';
 import { NotificationSection } from './NotificationSection';
-
 
 type TypeHeader = {
   handleLeftDrawerToggle: () => void
@@ -47,12 +45,9 @@ export const Header = ({ handleLeftDrawerToggle = () => { } }: TypeHeader) => {
         </ButtonBase>
       </Box>
 
-      {/* header search */}
-      <SearchSection />
       <Box sx={{ flexGrow: 1 }} />
       <Box sx={{ flexGrow: 1 }} />
 
-      {/* notification & profile */}
       <NotificationSection />
       <ProfileSection />
     </>

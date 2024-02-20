@@ -36,9 +36,8 @@ const CardStyle = styled(Card)(({ theme }) => ({
   }
 }));
 
-// ==============================|| PROFILE MENU - UPGRADE PLAN CARD ||============================== //
 
-const UpgradePlanCard = () => (
+export const UpgradePlanCard = () => (
   <CardStyle>
     <CardContent>
       <Grid container direction="column" spacing={2}>
@@ -64,5 +63,3 @@ const UpgradePlanCard = () => (
     </CardContent>
   </CardStyle>
 );
-
-export default UpgradePlanCard;
