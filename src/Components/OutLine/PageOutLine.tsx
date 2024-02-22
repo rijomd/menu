@@ -16,7 +16,7 @@ import { gridSpacing } from 'Services/Store/GridConstant';
 const Copyright = () => {
     return (
         <Typography variant="body2" color="grey.500" align="center" component={Link}>
-            {`Copyright © www.starter.com © ${new Date().getFullYear()}`}
+            {` www.menuKart.com @ ${new Date().getFullYear()}`}
         </Typography>
     );
 }

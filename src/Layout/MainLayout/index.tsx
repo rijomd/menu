@@ -17,14 +17,14 @@ import { useAppDispatch, useAppSelector } from "Services/Hook/Hook";
 
 import image from 'Assets/Images/background-image.jpg';
 
-const MainStyled = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, leftDrawerOpened }: { theme: any, leftDrawerOpened: boolean }) => ({
+const MainStyled = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, leftdraweropened = true }: { theme: any, leftdraweropened: boolean }) => ({
   ...theme.typography.body1,
   borderBottomLeftRadius: 0,
   borderBottomRightRadius: 0,
   marginTop: 74,
   transition: theme.transitions.create(
     'margin',
-    leftDrawerOpened
+    leftdraweropened
       ? {
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen
@@ -35,11 +35,11 @@ const MainStyled = styled('main', { shouldForwardProp: (prop) => prop !== 'open'
       }
   ),
   [theme.breakpoints.up('md')]: {
-    marginLeft: leftDrawerOpened ? 0 : -(drawerWidth),
-    width: leftDrawerOpened ? `calc(100% - ${drawerWidth}px)` : '100%'
+    marginLeft: leftdraweropened ? 0 : -(drawerWidth),
+    width: leftdraweropened ? `calc(100% - ${drawerWidth}px)` : '100%'
   },
   [theme.breakpoints.down('md')]: {
-    width: leftDrawerOpened ? `calc(100% - ${drawerWidth}px)` : '100%',
+    width: leftdraweropened ? `calc(100% - ${drawerWidth}px)` : '100%',
     padding: '16px'
   },
   [theme.breakpoints.down('sm')]: {
@@ -48,9 +48,9 @@ const MainStyled = styled('main', { shouldForwardProp: (prop) => prop !== 'open'
   }
 }));
 
-const Main = React.memo(({ leftDrawerOpened, content }: { leftDrawerOpened: boolean, content: React.ReactNode }) => {
+const Main = React.memo(({ leftdraweropened = true, content }: { leftdraweropened: boolean, content: React.ReactNode }) => {
   return (
-    <MainStyled theme={useTheme()} leftDrawerOpened={leftDrawerOpened}>
+    <MainStyled theme={useTheme()} leftdraweropened={leftdraweropened}>
       {content}
     </MainStyled>
   );
@@ -61,11 +61,11 @@ export const MainLayout = () => {
   const matchDownMd = useMediaQuery(theme.breakpoints.down('md'));
   const customization = useAppSelector(getCustomizationState);
   const dispatch = useAppDispatch();
-  const leftDrawerOpened = customization.opened;
+  const leftdraweropened = customization?.opened;
 
   const handleLeftDrawerToggle = useCallback(() => {
-    dispatch(setOpenDrawerAction(!leftDrawerOpened));
-  }, [leftDrawerOpened])
+    dispatch(setOpenDrawerAction(!leftdraweropened));
+  }, [leftdraweropened])
 
   const content = useMemo(() => {
     return <>
@@ -75,8 +75,8 @@ export const MainLayout = () => {
   }, [document.location.pathname])
 
   const sideBar = useMemo(() => (
-    <Sidebar drawerOpen={!matchDownMd ? leftDrawerOpened : !leftDrawerOpened} drawerToggle={handleLeftDrawerToggle} />
-  ), [leftDrawerOpened])
+    <Sidebar drawerOpen={!matchDownMd ? leftdraweropened : !leftdraweropened} drawerToggle={handleLeftDrawerToggle} />
+  ), [leftdraweropened])
 
   return (
     <Box sx={{ display: 'flex', minHeight: '100vh' }}>
@@ -89,7 +89,7 @@ export const MainLayout = () => {
         elevation={0}
         sx={{
           bgcolor: theme.palette.background.default,
-          transition: leftDrawerOpened ? theme.transitions.create('width') : 'none'
+          transition: leftdraweropened ? theme.transitions.create('width') : 'none'
         }}
       >
         <Toolbar sx={{ backgroundImage: `url(${image})` }}>
@@ -100,7 +100,7 @@ export const MainLayout = () => {
       {/* drawer */}
       {sideBar}
 
-      <Main leftDrawerOpened={leftDrawerOpened} content={content} />
+      <Main leftdraweropened={leftdraweropened || true} content={content} />
 
     </Box>
   );

@@ -120,7 +120,7 @@ const MemorizedBreadcrumbs = (props: TypesBreadcrumbs) => {
     if (item.breadcrumbs !== false) {
       breadcrumbContent = (
         <Card sx={{ background: theme.palette.background.default }}>
-          <Box sx={{ pr: 1, pl: 1 }}>
+          <Box sx={{ padding: '8px 16px' }}>
             <Grid
               container
               direction={rightAlign ? 'row' : 'column'}

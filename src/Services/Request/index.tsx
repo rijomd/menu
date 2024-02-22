@@ -68,4 +68,31 @@ export const isCancel = (error: any) => {
   return axios.isCancel(error);
 };
 
+export const fetchApi = async (body: any, url: string, method: string) => {
+  try {
+    let response: any;
+    switch (method.toLowerCase()) {
+      case 'get':
+        response = await instance.get(url);
+        break;
+      case 'post':
+        response = await instance.post(url, body);
+        break;
+      default:
+        throw new Error('Invalid HTTP method');
+    }
+
+    if (response?.statusText !== "OK") {
+      throw new Error(`HTTP error! Status: ${response?.status || "590"}`);
+    }
+    return response.data.data;
+  } catch (error: any) {
+    if (axios.isCancel(error)) {
+      throw "Request cancelled!";
+    }
+    throw error.response?.data.message || "Something Wrong!";
+  }
+
+}
+
 export default instance;
