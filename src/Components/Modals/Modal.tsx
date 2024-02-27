@@ -26,11 +26,12 @@ type TypeModal = {
     onAction?: (name: string) => void;
 }
 
-export const Modal = (props: TypeModal) => {
-    const { open, handleClose, title, children, maxWidth = 'md',
+const MemorizedModal = React.forwardRef((props: TypeModal, ref) => {
+    const { open = false, handleClose, title, children, maxWidth = 'md',
         fullScreen = false, disableBackgroundClose = false, onAction } = props;
 
     const draggableRef: React.MutableRefObject<any> = React.useRef(null);
+    const [isOpen, setIsOpen] = React.useState(false)
 
     function PaperComponent(props: any) {
         return !fullScreen ?
@@ -40,9 +41,14 @@ export const Modal = (props: TypeModal) => {
             : <Paper {...props} />
     }
 
+    React.useImperativeHandle(ref, () => ({
+        handleOpen: () => { setIsOpen(true); }
+    }))
+
+
     return (
         <Dialog
-            open={open}
+            open={open || isOpen}
             onClose={disableBackgroundClose ? () => { } : handleClose}
             aria-labelledby="draggable-dialog-title"
             aria-describedby="alert-dialog-description"
@@ -63,4 +69,6 @@ export const Modal = (props: TypeModal) => {
             </PageOutLine>
         </Dialog >
     )
-}
+});
+
+export const Modal = React.memo(MemorizedModal);

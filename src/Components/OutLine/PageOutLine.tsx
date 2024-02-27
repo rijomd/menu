@@ -24,7 +24,7 @@ const Copyright = () => {
 export type PageActions = TypeActions;
 
 type TypePageOutLine = {
-    children?: React.ReactElement;
+    children?: React.ReactElement | React.ReactElement[];
     isLoading?: boolean;
     title?: string,
     actions?: TypeActions[];
@@ -76,7 +76,7 @@ export const MemorizedPageOutLine = ({ children, isLoading = false, title, actio
                                     <Tooltip title='Save'>
                                         <CheckBoxIcon color='success' sx={{ fontSize: '30px', cursor: 'pointer' }} onClick={() => onAction('success')} />
                                     </Tooltip>
-                                    <Tooltip title='Close'>
+                                    <Tooltip title='Clear'>
                                         <DisabledByDefaultIcon color='error' sx={{ fontSize: '30px', cursor: 'pointer' }} onClick={() => onAction('error')} />
                                     </Tooltip>
                                 </>

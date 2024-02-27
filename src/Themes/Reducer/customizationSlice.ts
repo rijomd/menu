@@ -6,7 +6,6 @@ export type TypesCustomization = {
     isOpen: any[],
     defaultId: string,
     fontFamily: string,
-    borderRadius: number
     opened: boolean,
     pageStyle: { [others: string]: any; },
     mainOutlineStyle: { [others: string]: any; },
@@ -17,7 +16,6 @@ const initialState: TypesCustomization = {
     isOpen: [],
     defaultId: 'default',
     fontFamily: config.fontFamily,
-    borderRadius: config.borderRadius,
     opened: true,
     pageStyle: {},
     mainOutlineStyle: {},

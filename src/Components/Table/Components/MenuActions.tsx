@@ -40,9 +40,9 @@ const MemorizedMenuActions = ({ onClick = () => { }, rowActions = [], }: TypeMen
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
-                MenuListProps={{ 'aria-labelledby': 'basic-button', }}
+                MenuListProps={{ 'aria-labelledby': 'basic-button', style: { paddingTop: 0, paddingBottom: 0 } }}
             >
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleClose} sx={{ padding: '2px' }}>
                     <ButtonGroup color='secondary'>
                         {rowActions?.length > 0 && rowActions.map((action: TypeRowActions, key: number) => (
                             <Button key={key}
@@ -54,8 +54,8 @@ const MemorizedMenuActions = ({ onClick = () => { }, rowActions = [], }: TypeMen
                                     }
                                 }}
                             >
-                                <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
-                                    {action?.icon}
+                                <Box sx={{ display: 'flex', textTransform: 'capitalize' }}>
+                                    <Typography variant='subtitle1' sx={{ fontSize: '0px' }}> {action?.icon}</Typography>
                                     <Typography variant='subtitle1'> {action?.label}</Typography>
                                 </Box>
                             </Button  >))}

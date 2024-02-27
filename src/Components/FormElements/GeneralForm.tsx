@@ -75,7 +75,7 @@ export const GeneralForm = forwardRef((props: TypeGeneralForm, ref) => {
                                 {formValues.map((item, key) => {
 
                                     if (item?.hideColumn) {
-                                        return (<></>)
+                                        return ''
                                     }
                                     else {
                                         if (item?.type === "removeColumns") {
@@ -114,7 +114,7 @@ export const GeneralForm = forwardRef((props: TypeGeneralForm, ref) => {
                                                         }}
                                                         required={item?.required}
                                                         onBlur={() => onBlur(item, values?.[item.name])}
-                                                        error={{ isError: Boolean(errors[item.name]) && Boolean(touched[item.name]), errorMsg: errors[item.name] }}
+                                                        error={{ isError: Boolean(errors[item.name]) || Boolean(touched[item.name]), errorMsg: errors[item.name] }}
                                                     />
                                                 </Grid>
                                             );
@@ -134,7 +134,7 @@ export const GeneralForm = forwardRef((props: TypeGeneralForm, ref) => {
                                                         onChange={handleChange}
                                                         required={item?.required}
                                                         onBlur={() => onBlur(item, values?.[item.name])}
-                                                        error={{ isError: Boolean(errors[item.name]) && Boolean(touched[item.name]), errorMsg: errors[item.name], }}
+                                                        error={{ isError: Boolean(errors[item.name]) || Boolean(touched[item.name]), errorMsg: errors[item.name], }}
                                                     />
                                                 </Grid>
                                             );
@@ -155,7 +155,7 @@ export const GeneralForm = forwardRef((props: TypeGeneralForm, ref) => {
                                                         required={item?.required}
                                                         multiple={item?.isAutoCompleteMultiple}
                                                         onBlur={() => onBlur(item, values?.[item.name])}
-                                                        error={{ isError: Boolean(errors[item.name]) && Boolean(touched[item.name]), errorMsg: errors[item.name], }}
+                                                        error={{ isError: Boolean(errors[item.name]) || Boolean(touched[item.name]), errorMsg: errors[item.name], }}
                                                     />
                                                 </Grid>
                                             );

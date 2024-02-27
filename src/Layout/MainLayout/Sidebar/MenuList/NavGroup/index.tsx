@@ -1,3 +1,4 @@
+import React from 'react';
 import { useTheme } from '@mui/material/styles';
 import { Divider, List, Typography } from '@mui/material';
 
@@ -6,7 +7,7 @@ import { NavCollapse } from '../NavCollapse';
 
 import { TypeOfMenuPages } from "../../../../../MenuItems"
 
-export const NavGroup = ({ item }: { item: TypeOfMenuPages }) => {
+export const NavGroup = React.memo(({ item }: { item: TypeOfMenuPages }) => {
   const theme = useTheme();
 
   const items = item.children?.map((menu: TypeOfMenuPages) => {
@@ -46,4 +47,4 @@ export const NavGroup = ({ item }: { item: TypeOfMenuPages }) => {
       <Divider sx={{ mt: 0.25, mb: 1.25 }} />
     </>
   );
-};
+});

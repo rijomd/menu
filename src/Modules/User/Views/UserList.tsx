@@ -1,17 +1,16 @@
 import React from 'react';
 import { type MRT_ColumnDef, MRT_RowData } from 'material-react-table';
 import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
-import { Box } from '@mui/material';
 
 import { PageOutLine } from "Components/OutLine/PageOutLine";
 import { Modal } from 'Components/Modals/Modal';
+import { Status } from 'Components/UtilsComponents/Status';
 
 import { Table } from 'Components/Table/Table';
 import { TypeActions } from 'Components/Table/Components/TableActions';
 import { TypeRowActions } from 'Components/Table/Components/MenuActions';
 
 import { useAppDispatch, useAppSelector } from "Services/Hook/Hook";
-import { getStatusColor } from 'Utils/TableUtils';
 
 import { User } from '../Types/Types';
 import { UserForm } from "../Components/UserForm";
@@ -25,7 +24,7 @@ const UserList = ({ }: Props) => {
     const [openModal, setOpenModal] = React.useState(false);
 
     const formRef: React.MutableRefObject<any> = React.useRef(null);
-    const exportOptionsField = ['firstName', 'email', 'jobTitle']
+    const exportOptionsField = ['name', 'email', 'location', 'userRole', 'createdAt', 'status'];
 
     const actions = React.useMemo<TypeActions[]>(() => [
         { name: 'Add', onClick: () => { setOpenModal(true) }, icon: <EditIcon /> },
@@ -36,7 +35,7 @@ const UserList = ({ }: Props) => {
         () => [
             {
                 accessorKey: 'name',
-                header: 'Email',
+                header: 'Name',
             },
             {
                 accessorKey: 'email',
@@ -52,7 +51,7 @@ const UserList = ({ }: Props) => {
             },
             {
                 accessorFn: (row) => row.createdAt ? new Date(row.createdAt) : "-",
-                id: 'startDate',
+                id: 'createdAt',
                 header: 'Created',
                 filterVariant: 'date',
                 filterFn: 'lessThan',
@@ -65,18 +64,7 @@ const UserList = ({ }: Props) => {
                 filterVariant: 'autocomplete',
                 header: 'Status',
                 Cell: ({ cell }) => (
-                    <Box
-                        component="span"
-                        sx={() => ({
-                            backgroundColor: getStatusColor(cell.getValue),
-                            borderRadius: '0.25rem',
-                            color: '#fff',
-                            maxWidth: '9ch',
-                            p: '0.25rem',
-                        })}
-                    >
-                        {cell.getValue<string>()}
-                    </Box>
+                    <Status value={cell.getValue<string>()} />
                 )
             }
         ],
@@ -86,7 +74,6 @@ const UserList = ({ }: Props) => {
         { name: 'Edit', icon: <EditIcon color='primary' />, label: 'Edit' },
         { name: 'Delete', icon: <DeleteIcon color='error' />, label: 'Delete' }
     ], [])
-
 
     React.useEffect(() => {
         dispatch(getUserListAction({}));
@@ -100,7 +87,6 @@ const UserList = ({ }: Props) => {
     const getRowActions = (name: string, data: MRT_RowData) => {
         console.log(name, data);
     }
-
 
     return (
         <PageOutLine>

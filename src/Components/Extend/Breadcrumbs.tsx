@@ -71,7 +71,7 @@ const MemorizedBreadcrumbs = (props: TypesBreadcrumbs) => {
         return false;
       });
     }
-  }, []);
+  }, [document.location.pathname]);
 
   // item separator
   const SeparatorIcon = separator;

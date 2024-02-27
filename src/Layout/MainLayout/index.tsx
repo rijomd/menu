@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { styled, useTheme } from '@mui/material/styles';
@@ -10,14 +10,10 @@ import { Sidebar } from './Sidebar';
 import navigation from '../../MenuItems';
 
 import { Breadcrumbs } from 'Components/Extend/Breadcrumbs';
-import { getCustomizationState, setOpenDrawerAction } from "Themes/Reducer/customizationActions";
-
 import { drawerWidth } from 'Services/Store/GridConstant';
-import { useAppDispatch, useAppSelector } from "Services/Hook/Hook";
-
 import image from 'Assets/Images/background-image.jpg';
 
-const MainStyled = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, leftdraweropened = true }: { theme: any, leftdraweropened: boolean }) => ({
+const MainStyled = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, leftdraweropened }: { theme: any, leftdraweropened: boolean }) => ({
   ...theme.typography.body1,
   borderBottomLeftRadius: 0,
   borderBottomRightRadius: 0,
@@ -48,30 +44,32 @@ const MainStyled = styled('main', { shouldForwardProp: (prop) => prop !== 'open'
   }
 }));
 
-const Main = React.memo(({ leftdraweropened = true, content }: { leftdraweropened: boolean, content: React.ReactNode }) => {
+const Main = React.memo(({ leftdraweropened, content }: { leftdraweropened: boolean, content: React.ReactNode }) => {
   return (
     <MainStyled theme={useTheme()} leftdraweropened={leftdraweropened}>
       {content}
     </MainStyled>
   );
+}, (prevProps, nextProps) => {
+  return prevProps.leftdraweropened === nextProps.leftdraweropened;
 });
+
+const MemoizedOutlet = React.memo(Outlet);
 
 export const MainLayout = () => {
   const theme = useTheme();
   const matchDownMd = useMediaQuery(theme.breakpoints.down('md'));
-  const customization = useAppSelector(getCustomizationState);
-  const dispatch = useAppDispatch();
-  const leftdraweropened = customization?.opened;
+  const [leftdraweropened, setLeftdraweropened] = useState(true);
 
   const handleLeftDrawerToggle = useCallback(() => {
-    dispatch(setOpenDrawerAction(!leftdraweropened));
+    setLeftdraweropened(!leftdraweropened);
   }, [leftdraweropened])
 
   const content = useMemo(() => {
-    return <>
+    return (<>
       <Breadcrumbs separator={KeyboardArrowRightIcon} navigation={navigation} icon title rightAlign />
-      <Outlet />
-    </>
+      <MemoizedOutlet />
+    </>)
   }, [document.location.pathname])
 
   const sideBar = useMemo(() => (
@@ -100,7 +98,7 @@ export const MainLayout = () => {
       {/* drawer */}
       {sideBar}
 
-      <Main leftdraweropened={leftdraweropened || true} content={content} />
+      <Main leftdraweropened={leftdraweropened} content={content} />
 
     </Box>
   );

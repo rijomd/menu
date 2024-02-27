@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import { useTheme } from '@mui/material/styles';
@@ -7,10 +7,12 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
 import { useAppDispatch, useAppSelector } from "Services/Hook/Hook";
 import { getCustomizationState, setOpenDrawerAction, setOpenMenuAction } from "Themes/Reducer/customizationActions";
+
 import { TypeOfMenuPages } from "../../../../../MenuItems"
+import { config } from "Services/Config/Config";
 
 
-export const NavItem = ({ item, level }: { item: TypeOfMenuPages, level: number }) => {
+export const NavItem = React.memo(({ item, level }: { item: TypeOfMenuPages, level: number }) => {
   const theme = useTheme();
   const { pathname } = useLocation();
   const customization = useAppSelector(getCustomizationState);
@@ -61,7 +63,7 @@ export const NavItem = ({ item, level }: { item: TypeOfMenuPages, level: number 
     <ListItemButton
       disabled={item.disabled}
       sx={{
-        borderRadius: `${customization.borderRadius}px`,
+        borderRadius: `${config.borderRadius}px`,
         mb: 0.5,
         alignItems: 'flex-start',
         backgroundColor: level > 1 ? 'transparent !important' : 'inherit',
@@ -98,6 +100,6 @@ export const NavItem = ({ item, level }: { item: TypeOfMenuPages, level: number 
       )}
     </ListItemButton>
   );
-};
+});
 
 

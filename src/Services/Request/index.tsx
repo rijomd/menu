@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { api_Development } from "../Config/ApiConstants";
-import { getAuthToken } from "../Methods/AuthMethods";
 import axios from "axios";
+
+import { api_Development } from "../Config/ApiConstants";
+import { getAuthToken, encryptUser } from "../Methods/AuthMethods";
 
 type RequestHeaders = {
   [key: string]: string;
@@ -70,13 +71,14 @@ export const isCancel = (error: any) => {
 
 export const fetchApi = async (body: any, url: string, method: string) => {
   try {
+    const encryptedCredentials = encryptUser(body);
     let response: any;
     switch (method.toLowerCase()) {
       case 'get':
         response = await instance.get(url);
         break;
       case 'post':
-        response = await instance.post(url, body);
+        response = await instance.post(url, { encryptedCredentials });
         break;
       default:
         throw new Error('Invalid HTTP method');

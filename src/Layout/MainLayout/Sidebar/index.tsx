@@ -1,10 +1,11 @@
+import React from 'react';
 import { useTheme } from '@mui/material/styles';
 import { Box, Chip, Drawer, Stack, useMediaQuery } from '@mui/material';
 
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { BrowserView, MobileView } from 'react-device-detect';
 
-import MenuList from './MenuList';
+import { MenuList } from './MenuList';
 import { LogoSection } from '../LogoSection';
 import { UpgradePlanCard } from './Extra/UpgradePlanCard';
 
@@ -17,7 +18,7 @@ type TypeSidebar = {
   window?: any
 }
 
-export const Sidebar = ({ drawerOpen, drawerToggle = () => { }, window }: TypeSidebar) => {
+export const Sidebar = React.memo(({ drawerOpen, drawerToggle = () => { }, window }: TypeSidebar) => {
   const theme = useTheme();
   const matchUpMd = useMediaQuery(theme.breakpoints.up('md'));
 
@@ -84,4 +85,4 @@ export const Sidebar = ({ drawerOpen, drawerToggle = () => { }, window }: TypeSi
       </Drawer>
     </Box>
   );
-};
+});

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 
 import { useTheme } from '@mui/material/styles';
@@ -10,14 +10,11 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 
 import { NavItem } from '../NavItem';
 import { TypeOfMenuPages } from "../../../../../MenuItems";
+import { config } from "Services/Config/Config";
 
-import { useAppSelector } from "Services/Hook/Hook";
-import { getCustomizationState } from "Themes/Reducer/customizationActions";
-
-export const NavCollapse = ({ menu, level }: { menu: TypeOfMenuPages, level: number }) => {
+export const NavCollapse = React.memo(({ menu, level }: { menu: TypeOfMenuPages, level: number }) => {
   const theme = useTheme();
   const { pathname } = useLocation();
-  const customization = useAppSelector(getCustomizationState);
 
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<string>('');
@@ -85,7 +82,7 @@ export const NavCollapse = ({ menu, level }: { menu: TypeOfMenuPages, level: num
     <>
       <ListItemButton
         sx={{
-          borderRadius: `${customization.borderRadius}px`,
+          borderRadius: `${config.borderRadius}px`,
           mb: 0.5,
           alignItems: 'flex-start',
           backgroundColor: level > 1 ? 'transparent !important' : 'inherit',
@@ -139,5 +136,5 @@ export const NavCollapse = ({ menu, level }: { menu: TypeOfMenuPages, level: num
       </Collapse>
     </>
   );
-};
+});
 

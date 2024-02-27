@@ -25,6 +25,14 @@ export const Masters: TypeOfMenuPages = {
                 children: []
             },
             {
+                id: 'locationList',
+                title: 'Location',
+                type: 'item',
+                url: '/locationList',
+                breadcrumbs: true,
+                children: []
+            },
+            {
                 id: 'categoryList',
                 title: 'Category',
                 type: 'item',

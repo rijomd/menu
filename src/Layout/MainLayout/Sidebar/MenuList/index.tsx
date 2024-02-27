@@ -1,9 +1,10 @@
+import React from 'react';
 import { Typography } from '@mui/material';
 
 import { NavGroup } from './NavGroup';
 import menuItem from '../../../../MenuItems';
 
-const MenuList = () => {
+export const MenuList = React.memo(() => {
   const navItems = menuItem?.items?.map((item) => {
     switch (item.type) {
       case 'group':
@@ -18,6 +19,4 @@ const MenuList = () => {
   });
 
   return <>{navItems}</>;
-};
-
-export default MenuList;
+});
