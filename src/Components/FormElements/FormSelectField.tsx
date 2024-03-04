@@ -52,7 +52,7 @@ export const FormSelectField: React.FC<FormSelectFieldProps> = ({ name, value, o
                         return <MenuItem key={index} value={item.value}>{item.label}</MenuItem>
                     })}
                 </Select>
-                <FormHelperText >{error?.errorMsg || ""}</FormHelperText>
+                {error?.errorMsg && <FormHelperText >{error.errorMsg}</FormHelperText>}
             </FormControl></>
     )
 }

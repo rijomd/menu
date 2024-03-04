@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 
+import { useNotify } from "Services/Hook/useNotify";
 import { api_Development } from "../Config/ApiConstants";
 import { getAuthToken, encryptUser } from "../Methods/AuthMethods";
 
@@ -69,7 +70,7 @@ export const isCancel = (error: any) => {
   return axios.isCancel(error);
 };
 
-export const fetchApi = async (body: any, url: string, method: string) => {
+export const fetchApi = async (body: any, url: string, method: string, isNeedToast?: boolean) => {
   try {
     const encryptedCredentials = encryptUser(body);
     let response: any;
@@ -87,11 +88,13 @@ export const fetchApi = async (body: any, url: string, method: string) => {
     if (response?.statusText !== "OK") {
       throw new Error(`HTTP error! Status: ${response?.status || "590"}`);
     }
+    isNeedToast && useNotify(response?.data.message || "Success", "success");
     return response.data.data;
   } catch (error: any) {
     if (axios.isCancel(error)) {
       throw "Request cancelled!";
     }
+    useNotify(error.response?.data.message || "Something Wrong!", "error");
     throw error.response?.data.message || "Something Wrong!";
   }
 

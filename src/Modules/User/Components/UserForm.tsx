@@ -2,70 +2,74 @@ import * as Yup from 'yup';
 import { Box } from "@mui/material";
 
 import { GeneralForm, TypeFormValues, FormButtonField } from 'Components/FormElements'
+import { useAppSelector } from "Services/Hook/Hook";
+import { getUserState } from "../Reducer/UserAction";
 
-export const UserForm = ({ formRef }: { formRef?: any }) => {
+export const UserForm = ({ formRef, handleSubmit, initialData, }: { formRef?: any, handleSubmit: (data: any) => void, initialData: any, }) => {
+    const userState = useAppSelector(getUserState);
 
     const Schema = Yup.object().shape({
-        firstName: Yup.string()
+        name: Yup.string()
             .min(2, 'Too Short!')
             .max(50, 'Too Long!')
             .required('Required'),
         email: Yup.string().required('Required'),
+        location: Yup.string().required('Required'),
+        userRole: Yup.string().required('Required'),
     });
-
-    const initialValues = {
-        firstName: '',
-        email: '',
-        country: [],
-        isNew: false
-    };
 
     const formValues: TypeFormValues[] = [
         {
-            name: 'firstName',
-            label: 'First Name',
+            name: 'name',
+            label: 'Name',
             type: 'text',
             required: true,
         },
         {
             name: 'email',
             label: 'Email',
+            type: 'email',
+            required: true,
+            disabled: initialData._id ? true : false
+        },
+        {
+            name: 'password',
+            label: 'Password',
+            type: 'text',
+            required: true,
+            hideColumn: initialData._id ? true : false
+        },
+        {
+            name: 'location',
+            label: 'Location',
+            type: 'autocomplete',
+            options: userState.locationCompo,
+            required: true,
+        },
+        {
+            name: 'userRole',
+            label: 'User Type',
             type: 'select',
             options: [
-                { label: 'apple', value: '101' },
-                { label: 'orange', value: '111' },
-                { label: 'banana', value: '123' }
+                { label: 'Admin', value: 'Admin' },
+                { label: 'User', value: 'User' },
             ],
             required: true,
         },
         {
-            name: 'country',
-            label: 'Country',
-            type: 'autocomplete',
-            options: [
-                { label: 'India', value: 'in' },
-                { label: 'Uae', value: 'uae' },
-                { label: 'England', value: 'eng' }
-            ],
-            required: true,
-            isAutoCompleteMultiple: true
-        },
-        {
-            name: 'isNew',
-            label: 'Is New',
-            type: 'checkBox'
+            name: 'status',
+            label: 'Status',
+            type: 'checkBox',
+            hideColumn: initialData._id ? false : true
         },
     ];
 
-    const handleSubmit = (values: any) => {
-        console.log(values);
-    }
 
     return (
         <Box sx={{ margin: '8px 4px' }}>
             <GeneralForm
                 handleSubmit={handleSubmit}
-                initialValues={initialValues}
+                initialValues={initialData}
                 validationSchema={Schema}
                 formValues={formValues}
                 ref={formRef}

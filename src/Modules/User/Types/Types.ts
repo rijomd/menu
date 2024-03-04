@@ -6,4 +6,6 @@ export type User = {
     location: string;
     userRole: string;
     status: string;
+    _id?: string;
+    locationId?: string;
 };

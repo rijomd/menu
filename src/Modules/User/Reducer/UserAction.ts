@@ -3,18 +3,16 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { RootState } from 'Services/Store/Store';
 import { fetchApi } from "Services/Request";
-import { encryptUser } from "Services/Methods/AuthMethods";
 
-import { userList } from "../Config/urlConstants";
+import { userList, insertUser, locationCompo } from "../Config/urlConstants";
 
 export const getUserState = (state: RootState) => state.user;
 
 export const getUserListAction = createAsyncThunk(
     "user/getUserListAction",
     async (body: any, thunkAPI) => {
-        // const encryptedCredentials = encryptUser(body);
         try {
-            const data = await fetchApi(body, userList, 'get');
+            const data = await fetchApi(body, userList, 'get',true);
             return data?.['UserList'];
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error);
@@ -22,4 +20,28 @@ export const getUserListAction = createAsyncThunk(
     }
 );
 
+export const insertUserAction = createAsyncThunk(
+    "user/insertLocationListAction",
+    async (body: any, thunkAPI) => {
+        console.log(body);
+        try {
+            await fetchApi(body, insertUser, 'post', true);
+            thunkAPI.dispatch(getUserListAction({}));
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+);
+
+export const getLocationCompo = createAsyncThunk(
+    "user/getLocationCompo",
+    async (body: any, thunkAPI) => {
+        try {
+            const data = await fetchApi(body, locationCompo, 'get');
+            return data?.['locationCompo'];
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+);
 

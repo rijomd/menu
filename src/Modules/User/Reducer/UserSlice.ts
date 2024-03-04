@@ -1,6 +1,6 @@
 import { createSlice, } from "@reduxjs/toolkit";
 
-import { getUserListAction } from "../Reducer/UserAction";
+import { getUserListAction, getLocationCompo } from "../Reducer/UserAction";
 import { errorMessage, successMessage } from "../Config/Constants";
 import { User } from '../Types/Types';
 
@@ -8,12 +8,23 @@ export type CounterState = {
     status: "idle" | "loading" | "success" | "failed";
     error: string | null | {};
     userList: User[];
+    user: User,
+    locationCompo: { label: string, value: string }[],
 }
 
 const initialState: CounterState = {
     status: "idle",
     error: null,
-    userList: []
+    userList: [],
+    locationCompo: [],
+    user: {
+        name: '',
+        email: '',
+        createdAt: '',
+        location: '',
+        userRole: '',
+        status: 'Active'
+    }
 };
 export const userSlice = createSlice({
     name: 'user',
@@ -34,7 +45,15 @@ export const userSlice = createSlice({
             state.status = "failed";
             state.error = action.payload || errorMessage;
         });
+       
+        builder.addCase(getLocationCompo.fulfilled, (state, action) => {
+            state.status = "success";
+            state.locationCompo = action.payload;
+        });
+       
     },
+
+
 
 });
 

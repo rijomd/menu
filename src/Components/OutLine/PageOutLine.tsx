@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import { ToastContainer } from "react-toastify";
 
 import { styled, useTheme } from '@mui/material/styles';
 import { Typography, Link, useMediaQuery, Backdrop, Grid, Divider, Tooltip } from '@mui/material';
@@ -91,6 +92,8 @@ export const MemorizedPageOutLine = ({ children, isLoading = false, title, actio
                         <Copyright />
                     </Grid>
                 </Grid>
+            <ToastContainer />
+
             </PerfectScrollbar>
         </PageWrapper>
     )

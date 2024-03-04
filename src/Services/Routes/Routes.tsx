@@ -77,11 +77,11 @@ export const GeneralRoutes = React.memo(() => {
                 <Route element={<AuthLayout />}>
                   <Route path={`/login`} element={<Login />} />
                 </Route>
+                <Route path="/" element={<Navigate to={`$/dashboard1`} />} />
                 {renderGeneratedRoutes}
                 <Route element={<MainLayout />}>
                   <Route path="*" element={<ErrorNotFound />} />
                 </Route>
-
               </Routes>
             </Suspense>
 

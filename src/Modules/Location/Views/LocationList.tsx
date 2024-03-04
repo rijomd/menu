@@ -61,21 +61,19 @@ const TableComponent = React.memo(({ setOpenModal }: { setOpenModal: (data: any)
 
     const getRowActions = (name: string, data: MRT_RowData) => {
         if (name === 'Edit') {
-            setOpenModal({ open: true, data: data })
+            setOpenModal({ open: true, data: { ...data, status: data.status === 'Active' ? true : false } })
         }
     }
 
-    return (
-        <Table
-            columns={columns}
-            data={LocationState.locationList}
-            actions={actions}
-            rowActions={rowActions}
-            getRowActions={getRowActions}
-            exportOptionsField={exportOptionsField}
-            isEnableExportFileName='Location'
-        />
-    );
+    return (<Table
+        columns={columns}
+        data={LocationState.locationList}
+        actions={actions}
+        rowActions={rowActions}
+        getRowActions={getRowActions}
+        exportOptionsField={exportOptionsField}
+        isEnableExportFileName='Location'
+    />);
 }, () => true);
 
 const FormComponent = React.memo(({ openModal, setOpenModal }: { openModal: any, setOpenModal: (data: any) => void }) => {
@@ -83,7 +81,7 @@ const FormComponent = React.memo(({ openModal, setOpenModal }: { openModal: any,
     const dispatch = useAppDispatch();
 
     const handleSubmit = (data: any) => {
-        dispatch(insertLocationListAction({ ...data, status: data.status === false ? 'InActive': 'Active' })).then(res => {
+        dispatch(insertLocationListAction({ ...data, status: data.status === false ? 'InActive' : 'Active' })).then(res => {
             if (res) { setOpenModal({ open: false, data: {} }) }
         })
     }

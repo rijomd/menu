@@ -1,6 +1,6 @@
 import React from 'react';
 import { type MRT_ColumnDef, MRT_RowData } from 'material-react-table';
-import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material';
+import EditNoteIcon from '@mui/icons-material/EditNote';
 
 import { PageOutLine } from "Components/OutLine/PageOutLine";
 import { Modal } from 'Components/Modals/Modal';
@@ -14,21 +14,16 @@ import { useAppDispatch, useAppSelector } from "Services/Hook/Hook";
 
 import { User } from '../Types/Types';
 import { UserForm } from "../Components/UserForm";
-import { getUserListAction, getUserState } from "../Reducer/UserAction";
+import { getUserListAction, getUserState, insertUserAction, getLocationCompo } from "../Reducer/UserAction";
 
 type Props = {}
 
-const UserList = ({ }: Props) => {
+const TableComponent = React.memo(({ setOpenModal }: { setOpenModal: (data: any) => void }) => {
     const userState = useAppSelector(getUserState);
-    const dispatch = useAppDispatch();
-    const [openModal, setOpenModal] = React.useState(false);
-
-    const formRef: React.MutableRefObject<any> = React.useRef(null);
     const exportOptionsField = ['name', 'email', 'location', 'userRole', 'createdAt', 'status'];
 
     const actions = React.useMemo<TypeActions[]>(() => [
-        { name: 'Add', onClick: () => { setOpenModal(true) }, icon: <EditIcon /> },
-        { name: 'Save', color: 'success' },
+        { name: 'Add', onClick: () => { setOpenModal({ open: true, data: userState.user }) }, icon: <EditNoteIcon /> },
     ], [])
 
     const columns = React.useMemo<MRT_ColumnDef<User>[]>(
@@ -71,39 +66,76 @@ const UserList = ({ }: Props) => {
         [],);
 
     const rowActions = React.useMemo<TypeRowActions[]>(() => [
-        { name: 'Edit', icon: <EditIcon color='primary' />, label: 'Edit' },
-        { name: 'Delete', icon: <DeleteIcon color='error' />, label: 'Delete' }
+        { name: 'Edit', icon: <EditNoteIcon color='secondary' />, label: 'Edit' },
     ], [])
 
-    React.useEffect(() => {
-        dispatch(getUserListAction({}));
-        return () => { }
-    }, [])
-
-    const onAction = (name: string) => {
-        name === 'success' ? formRef.current.handleSubmit() : formRef.current.handleClear()
+    const getRowActions = (name: string, data: MRT_RowData) => {
+        if (name === 'Edit') {
+            setOpenModal({ open: true, data: { ...data, status: data.status === 'Active' ? true : false, location: data.locationId } })
+        }
     }
 
-    const getRowActions = (name: string, data: MRT_RowData) => {
-        console.log(name, data);
+    return (<Table
+        columns={columns}
+        data={userState.userList}
+        actions={actions}
+        rowActions={rowActions}
+        getRowActions={getRowActions}
+        exportOptionsField={exportOptionsField}
+        isEnableExportFileName='User'
+    />);
+}, () => true);
+
+const FormComponent = React.memo(({ openModal, setOpenModal }: { openModal: any, setOpenModal: (data: any) => void }) => {
+    const formRef: React.MutableRefObject<any> = React.useRef(null);
+    const dispatch = useAppDispatch();
+
+    const handleSubmit = (data: any) => {
+        dispatch(insertUserAction({ ...data, status: data.status === false ? 'InActive' : 'Active' })).then(res => {
+            if (res) { setOpenModal({ open: false, data: {}, }) }
+        })
+    }
+
+    const onAction = (name: string) => {
+        if (name === 'success') {
+            formRef.current.handleSubmit()
+        }
+        else {
+            formRef.current.handleClear();
+            setOpenModal({ open: false, data: {}, })
+        }
     }
 
     return (
+        <Modal title="User Details" open={openModal.open}
+            handleClose={() => setOpenModal({ open: false, data: {}, })}
+            disableBackgroundClose
+            onAction={onAction}>
+            <UserForm formRef={formRef} handleSubmit={handleSubmit} initialData={openModal.data} />
+        </Modal>
+    );
+}, () => true);
+
+const UserList = ({ }: Props) => {
+    const dispatch = useAppDispatch();
+    const [openModal, setOpenModal] = React.useState(false);
+
+    React.useEffect(() => {
+        dispatch(getUserListAction({}));
+        dispatch(getLocationCompo({}));
+        return () => { }
+    }, [])
+
+    return (
         <PageOutLine>
-            <>
-                <Table
-                    columns={columns}
-                    data={userState.userList}
-                    actions={actions}
-                    rowActions={rowActions}
-                    getRowActions={getRowActions}
-                    exportOptionsField={exportOptionsField}
-                    isEnableExportFileName='User'
-                />
-                <Modal title="Add Sample Data" open={openModal} handleClose={() => setOpenModal(false)} onAction={onAction}>
-                    <UserForm formRef={formRef} />
-                </Modal>
-            </>
+            <TableComponent
+                setOpenModal={(data) => { setOpenModal(data) }}
+            />
+            <FormComponent
+                setOpenModal={(data) => { setOpenModal(data) }}
+                openModal={openModal}
+            />
+
         </PageOutLine>
     )
 }
