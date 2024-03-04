@@ -11,6 +11,7 @@ import { TypeActions } from 'Components/Table/Components/TableActions';
 import { TypeRowActions } from 'Components/Table/Components/MenuActions';
 
 import { useAppDispatch, useAppSelector } from "Services/Hook/Hook";
+import { getAuthUser } from 'Services/Methods/AuthMethods';
 
 import { User } from '../Types/Types';
 import { UserForm } from "../Components/UserForm";
@@ -21,9 +22,21 @@ type Props = {}
 const TableComponent = React.memo(({ setOpenModal }: { setOpenModal: (data: any) => void }) => {
     const userState = useAppSelector(getUserState);
     const exportOptionsField = ['name', 'email', 'location', 'userRole', 'createdAt', 'status'];
+    const user = getAuthUser();
 
     const actions = React.useMemo<TypeActions[]>(() => [
-        { name: 'Add', onClick: () => { setOpenModal({ open: true, data: userState.user }) }, icon: <EditNoteIcon /> },
+        {
+            name: 'Add', onClick: () => {
+                setOpenModal({
+                    open: true, data: {
+                        ...userState.user,
+                        location: user.userRole === 'Admin' ? user?.location : '',
+                        userRole: user.userRole === 'Admin' ? 'User' : '',
+                    }
+                })
+            },
+            icon: <EditNoteIcon />
+        },
     ], [])
 
     const columns = React.useMemo<MRT_ColumnDef<User>[]>(

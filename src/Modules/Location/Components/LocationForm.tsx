@@ -22,18 +22,21 @@ export const LocationForm = ({ formRef, handleSubmit, initialData }: { formRef?:
             label: 'Name',
             type: 'text',
             required: true,
+            grid: { largeDevice: 4, mediumDevice: 4 }
         },
         {
             name: 'code',
             label: 'Code',
             type: 'text',
             required: true,
+            grid: { largeDevice: 4, mediumDevice: 4 }
         },
         {
             name: 'status',
             label: 'Status',
             type: 'checkBox',
-            hideColumn: initialData._id ? false : true
+            hideColumn: initialData._id ? false : true,
+            grid: { largeDevice: 4, mediumDevice: 4 }
         },
     ];
 
