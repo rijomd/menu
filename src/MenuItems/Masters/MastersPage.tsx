@@ -1,6 +1,7 @@
 
 import { TypeOfMenuPages } from '../index';
 import CottageIcon from '@mui/icons-material/Cottage';
+import { getAuthUser } from 'Services/Methods/AuthMethods';
 
 const icons = { CottageIcon };
 
@@ -9,12 +10,14 @@ export const Masters: TypeOfMenuPages = {
     title: 'Master',
     type: 'group',
     url: "",
+    permission: getAuthUser()?.userRole === 'User' ? false : true,
     children: [{
         id: 'masters',
         title: 'Masters',
         type: 'collapse',
         icon: icons.CottageIcon,
         url: "",
+        permission: getAuthUser()?.userRole === 'User' ? false : true,
         children: [
             {
                 id: 'userList',
@@ -22,7 +25,8 @@ export const Masters: TypeOfMenuPages = {
                 type: 'item',
                 url: '/userList',
                 breadcrumbs: true,
-                children: []
+                children: [],
+                permission: true
             },
             {
                 id: 'locationList',
@@ -30,7 +34,8 @@ export const Masters: TypeOfMenuPages = {
                 type: 'item',
                 url: '/locationList',
                 breadcrumbs: true,
-                children: []
+                children: [],
+                permission: getAuthUser()?.userRole === 'superAdmin' ? true : false,
             },
             {
                 id: 'categoryList',
@@ -38,7 +43,8 @@ export const Masters: TypeOfMenuPages = {
                 type: 'item',
                 url: '/categoryList',
                 breadcrumbs: true,
-                children: []
+                children: [],
+                permission: true
             },
             {
                 id: 'itemList',
@@ -46,7 +52,8 @@ export const Masters: TypeOfMenuPages = {
                 type: 'item',
                 url: '/itemList',
                 breadcrumbs: true,
-                children: []
+                children: [],
+                permission: true
             }
         ]
     }]

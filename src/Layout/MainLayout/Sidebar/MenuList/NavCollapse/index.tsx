@@ -53,9 +53,9 @@ export const NavCollapse = React.memo(({ menu, level }: { menu: TypeOfMenuPages,
   const menus = menu.children?.map((item: any) => {
     switch (item.type) {
       case 'collapse':
-        return <NavCollapse key={item.id} menu={item} level={level + 1} />;
+        return item?.permission ? <NavCollapse key={item.id} menu={item} level={level + 1} /> : null;
       case 'item':
-        return <NavItem key={item.id} item={item} level={level + 1} />;
+        return item?.permission ? <NavItem key={item.id} item={item} level={level + 1} /> : null;
       default:
         return (
           <Typography key={item.id} variant="h6" color="error" align="center">

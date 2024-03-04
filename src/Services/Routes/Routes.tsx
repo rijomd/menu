@@ -23,16 +23,24 @@ import { config } from 'Services/Config/Config';
 type PropType = {
   component: React.FC;
   auth: boolean;
+  permission: boolean;
 };
 
 export const GeneralRoutes = React.memo(() => {
   const Login = lazy(() => import("../../Modules/Auth/Views/Login"));
   const customizationState = useAppSelector(getCustomizationState);
 
-  const PrivateRoute: FC<PropType> = ({ component: Component, auth: Auth, }) => {
+  const PrivateRoute: FC<PropType> = ({ component: Component, auth: Auth, permission: Permission }) => {
     if (Auth) {
       const data = getAuthToken();
-      if (data) { return <Component />; }
+      if (data) {
+        if (Permission) {
+          return <Component />;
+        }
+        else {
+          return <ErrorNotFound />;
+        }
+      }
       else { return <Navigate to={`/login`} />; }
     }
     return <Component />;
@@ -55,7 +63,7 @@ export const GeneralRoutes = React.memo(() => {
             <Route key={name} element={<MainLayout />}>
               <Route
                 path={`${item.path}`}
-                element={<PrivateRoute component={generated} auth={auth} />}
+                element={<PrivateRoute component={generated} auth={auth} permission={item?.permission} />}
               />
             </Route>
           );

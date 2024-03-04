@@ -4,7 +4,6 @@ import crypto from 'crypto-js'
 export const ACCESS_TOKEN = "ACCESS_TOKEN";
 export const AUTH_USER = "AUTH_USER";
 export const ENCRYPT_USER_KEY = "RIJO-MENU-ENCRYPTION-PURPOSE";
-export const INITIALIZATION_VECTOR = "SAMPLE12345";
 
 export const getAuthToken = () => {
   return localStorage.getItem(ACCESS_TOKEN)
@@ -17,14 +16,19 @@ export const getMyAPiUrl = () => {
 };
 
 export const getAuthUser = () => {
-  if (localStorage.getItem(AUTH_USER)) {
-    const selectedUser: any = localStorage.getItem(AUTH_USER);
-    const decryptedBytes = crypto.AES.decrypt(selectedUser, ENCRYPT_USER_KEY);
-    const decryptedData = JSON.parse(decryptedBytes.toString(crypto.enc.Utf8));
-    return decryptedData;
-  }
-  else {
-    return ''
+  const selectedUser: any = localStorage.getItem(AUTH_USER);
+  try {
+    if (selectedUser) {
+      const bytes = crypto.AES.decrypt(selectedUser, ENCRYPT_USER_KEY);
+      const decryptedData = bytes.toString(crypto.enc.Utf8);
+      if (!decryptedData) {
+        throw new Error('Decrypted data is empty');
+      }
+      return JSON.parse(decryptedData);
+    }
+  } catch (error) {
+    console.error('Error decrypting data:', error);
+    return null;
   }
 }
 

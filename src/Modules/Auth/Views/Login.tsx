@@ -28,6 +28,7 @@ const Login = () => {
     if (authentication.status === "success") {
       useNotify(authentication.error, "success");
       navigate(config.defaultPath);
+      window.location.reload();
     }
     if (authentication.status === "failed") {
       useNotify(authentication.error, "error");

@@ -25,7 +25,8 @@ export type TypeOfMenuPages = {
     external?: boolean,
     disabled?: boolean,
     chip?: TypeChip,
-    titleBottom?: boolean
+    titleBottom?: boolean,
+    permission?: boolean
 }
 
 const menuItems = {

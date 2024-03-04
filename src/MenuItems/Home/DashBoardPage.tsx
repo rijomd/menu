@@ -10,6 +10,7 @@ export const Dashboard: TypeOfMenuPages = {
     // caption: 'Home page',
     type: 'group',
     url: "",
+    permission: true,
     children: [
         {
             id: 'dashboard1',
@@ -17,7 +18,8 @@ export const Dashboard: TypeOfMenuPages = {
             type: 'item',
             icon: icons.CottageIcon,
             url: '/dashboard1',
-            breadcrumbs: false
+            breadcrumbs: false,
+            permission: true
         }
     ]
 };

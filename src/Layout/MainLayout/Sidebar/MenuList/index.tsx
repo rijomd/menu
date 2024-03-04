@@ -8,7 +8,7 @@ export const MenuList = React.memo(() => {
   const navItems = menuItem?.items?.map((item) => {
     switch (item.type) {
       case 'group':
-        return <NavGroup key={item.id} item={item} />;
+        return item.permission ? <NavGroup key={item.id} item={item} /> : null;
       default:
         return (
           <Typography key={item.id} variant="h6" color="error" align="center">

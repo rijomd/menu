@@ -5,7 +5,7 @@ import Image from 'Assets/Images/404.png';
 export const ErrorNotFound = () => {
 
     const PageWrapper = styled('div')(({ theme }) => ({
-        height: 'calc(100vh - 100px)',
+        height: 'calc(100vh - 86px)',
         position: 'relative',
         overflow: 'hidden',
         padding: '8px',
