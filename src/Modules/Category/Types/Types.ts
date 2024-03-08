@@ -1,11 +1,10 @@
 
 export type Category = {
-    firstName: string;
-    lastName: string;
-    email: string;
-    jobTitle: string;
-    salary: number;
-    startDate?: string;
-    signatureCatchPhrase: string;
-    avatar: string;
+    uniqueId?: number;
+    _id?: string;
+    name: string;
+    image: any;
+    location: string;
+    status: string;
+    createdAt?: string;
 };

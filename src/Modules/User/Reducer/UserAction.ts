@@ -12,7 +12,7 @@ export const getUserListAction = createAsyncThunk(
     "user/getUserListAction",
     async (body: any, thunkAPI) => {
         try {
-            const data = await fetchApi(body, userList, 'get',true);
+            const data = await fetchApi(body, userList, 'get', false);
             return data?.['UserList'];
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error);
@@ -21,7 +21,7 @@ export const getUserListAction = createAsyncThunk(
 );
 
 export const insertUserAction = createAsyncThunk(
-    "user/insertLocationListAction",
+    "user/insertUserAction",
     async (body: any, thunkAPI) => {
         console.log(body);
         try {

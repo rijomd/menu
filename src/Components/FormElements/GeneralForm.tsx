@@ -6,6 +6,7 @@ import { FormTextField } from './FormTextField';
 import { FormSelectField } from './FormSelectField';
 import { FormCheckBoxField } from './FormCheckBoxField';
 import { FormAutoComplete } from './FormAutoComplete'
+import { FormFileField } from './FormFileField';
 
 import { gridSpacing } from 'Services/Store/GridConstant';
 
@@ -16,8 +17,8 @@ type TypeOptions = {
 
 export type TypeFormValues = {
     name: string;
-    label: string;
-    type: 'text' | 'number' | 'email' | 'select' | 'HTMLcontent' | 'removeColumns' | 'checkBox' | 'autocomplete';
+    label?: string;
+    type: 'text' | 'number' | 'email' | 'select' | 'HTMLcontent' | 'removeColumns' | 'checkBox' | 'autocomplete' | 'file';
     placeholder?: string;
     disabled?: boolean;
     required?: boolean;
@@ -33,6 +34,7 @@ export type TypeFormValues = {
     gridClassName?: string;
     onBlur?: (value: string | number) => void;
     isAutoCompleteMultiple?: boolean;
+    fileProps?: any;
 }
 
 type TypeGeneralForm = {
@@ -41,10 +43,14 @@ type TypeGeneralForm = {
     validationSchema?: any;
     handleSubmit: (values: any) => void;
     formActionComponents?: React.ReactElement;
+    actionGrid?: {
+        mediumDevice: number;
+        largeDevice: number;
+    },
 }
 
 export const GeneralForm = forwardRef((props: TypeGeneralForm, ref) => {
-    const { initialValues = {}, formValues, validationSchema, handleSubmit, formActionComponents } = props;
+    const { initialValues = {}, formValues, validationSchema, handleSubmit, formActionComponents, actionGrid } = props;
 
     const generalFormRef: React.MutableRefObject<any> = useRef(null);
 
@@ -68,7 +74,7 @@ export const GeneralForm = forwardRef((props: TypeGeneralForm, ref) => {
                 innerRef={generalFormRef}
                 onSubmit={(values) => { handleSubmit(values) }}
             >
-                {({ values, errors, touched, handleChange, setFieldValue }) => {
+                {({ values, errors, handleChange, setFieldValue }) => {
                     return (
                         <Form encType="multipart/form-data">
                             <Grid container spacing={gridSpacing}>
@@ -120,13 +126,35 @@ export const GeneralForm = forwardRef((props: TypeGeneralForm, ref) => {
                                             );
                                         }
 
+                                        if (item?.type === "file") {
+                                            return (
+                                                <Grid item className={item?.gridClassName}
+                                                    lg={item?.grid?.largeDevice || 3} md={item?.grid?.mediumDevice || 3}
+                                                    xs={12} sm={12} key={key}>
+                                                    <FormFileField
+                                                        label={item.label}
+                                                        value={values?.[item.name]}
+                                                        name={item.name}
+                                                        type={item?.type}
+                                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                                            const file = e.currentTarget?.files && e.currentTarget.files[0];
+                                                            setFieldValue(item.name, file)
+                                                        }}
+                                                        fileProps={item.fileProps}
+                                                        required={item?.required}
+                                                        error={{ isError: Boolean(errors[item.name]), errorMsg: errors[item.name] }}
+                                                    />
+                                                </Grid>
+                                            );
+                                        }
+
                                         if (item?.type === "select") {
                                             return (
                                                 <Grid item className={item?.gridClassName}
                                                     lg={item?.grid?.largeDevice || 3} md={item?.grid?.mediumDevice || 3}
                                                     xs={12} sm={12} key={key}>
                                                     <FormSelectField
-                                                        label={item?.label}
+                                                        label={item?.label || ''}
                                                         value={values?.[item.name]}
                                                         name={item.name}
                                                         options={item?.options || []}
@@ -134,7 +162,7 @@ export const GeneralForm = forwardRef((props: TypeGeneralForm, ref) => {
                                                         onChange={handleChange}
                                                         required={item?.required}
                                                         onBlur={() => onBlur(item, values?.[item.name])}
-                                                        error={{ isError:  Boolean(errors[item.name]), errorMsg: errors[item.name], }}
+                                                        error={{ isError: Boolean(errors[item.name]), errorMsg: errors[item.name], }}
                                                     />
                                                 </Grid>
                                             );
@@ -146,7 +174,7 @@ export const GeneralForm = forwardRef((props: TypeGeneralForm, ref) => {
                                                     lg={item?.grid?.largeDevice || 3} md={item?.grid?.mediumDevice || 3}
                                                     xs={12} sm={12} key={key}>
                                                     <FormAutoComplete
-                                                        label={item?.label}
+                                                        label={item?.label || ''}
                                                         value={values?.[item.name]}
                                                         name={item.name}
                                                         options={item?.options || []}
@@ -155,7 +183,7 @@ export const GeneralForm = forwardRef((props: TypeGeneralForm, ref) => {
                                                         required={item?.required}
                                                         multiple={item?.isAutoCompleteMultiple}
                                                         onBlur={() => onBlur(item, values?.[item.name])}
-                                                        error={{ isError:  Boolean(errors[item.name]), errorMsg: errors[item.name], }}
+                                                        error={{ isError: Boolean(errors[item.name]), errorMsg: errors[item.name], }}
                                                     />
                                                 </Grid>
                                             );
@@ -180,7 +208,7 @@ export const GeneralForm = forwardRef((props: TypeGeneralForm, ref) => {
                                     }
                                 })}
 
-                                {formActionComponents && <Grid item lg={12} md={12} xs={12} sm={12} style={{ textAlign: "right" }}>
+                                {formActionComponents && <Grid item lg={actionGrid?.largeDevice || 12} md={actionGrid?.mediumDevice || 12} xs={12} sm={12} style={{ textAlign: "right" }}>
                                     {formActionComponents}
                                 </Grid>}
 

@@ -88,7 +88,9 @@ export const fetchApi = async (body: any, url: string, method: string, isNeedToa
     if (response?.statusText !== "OK") {
       throw new Error(`HTTP error! Status: ${response?.status || "590"}`);
     }
-    isNeedToast && useNotify(response?.data.message || "Success", "success");
+    if (isNeedToast) {
+      useNotify(response?.data.message || "Success", "success");
+    }
     return response.data.data;
   } catch (error: any) {
     if (axios.isCancel(error)) {

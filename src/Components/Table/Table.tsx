@@ -22,7 +22,7 @@ type TypeTable = {
     rowActions?: TypeRowActions[];
     enableRowSelection?: boolean;
     enableExpanding?: boolean;
-    getRowSelected?: (name: string, items: MRT_RowData[]) => void;
+    getRowSelected?: (name: string, items: MRT_RowData[], row?: any) => void;
     renderExpandPanel?: (data: any) => ReactNode | undefined;
     getRowActions?: (name: string, item: MRT_RowData) => void;
     hideColumns?: TypeHeaderDetails[];
@@ -33,7 +33,7 @@ type TypeTable = {
 
 export const MemorizedTable = (props: TypeTable) => {
     const { columns = [], data = [], actions = [], rowSelectionAction = [], rowActions = [], enableRowSelection = false,
-        enableExpanding = false, getRowActions = undefined, getRowSelected = () => { }, renderExpandPanel = undefined,
+        enableExpanding = false, getRowActions = undefined, getRowSelected = undefined, renderExpandPanel = undefined,
         hideColumns = [], hideFields = {}, isEnableExportFileName, exportOptionsField = [] } = props;
 
     const theme = useTheme();
@@ -99,6 +99,7 @@ export const MemorizedTable = (props: TypeTable) => {
         },
         renderTopToolbar: ({ table }) => {
             let selectedRows: any[] = [];
+
             if (table.getIsSomeRowsSelected() && enableRowSelection) {
                 table.getSelectedRowModel().flatRows.map((row) => {
                     selectedRows.push(row.original)
@@ -108,7 +109,7 @@ export const MemorizedTable = (props: TypeTable) => {
             const MemorizedTableAction = useMemo(() => (
                 <TableActions
                     direction={isMobile ? 'right' : 'left'}
-                    onClick={(name) => getRowSelected(name, selectedRows)}
+                    onClick={(name) => getRowSelected && getRowSelected(name, selectedRows, table)}
                     actions={enableRowSelection ? [...actions, ...rowSelectionAction] : actions}
                 />
             ), []);

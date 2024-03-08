@@ -21,6 +21,15 @@ const ItemList = (props: Props) => {
         setIntervalId(id);
     };
 
+    const [count, setCount] = React.useState(0);
+
+    const handleClick = () => {
+        // Update state multiple times within the same event handler
+        setCount(count + 1);
+        setCount(count + 1);
+        setCount(count + 1);
+    };
+
     return (
         <div className="App">
             {comp.map((item: any, index: number) => {
@@ -44,6 +53,12 @@ const ItemList = (props: Props) => {
                 clearInterval(intervalId);
                 setIntervalId(null);
             }}><b>cancel</b></button>
+
+            <div>
+                <h1>Counter: {count}</h1>
+                <button onClick={handleClick}>Increment</button>
+            </div>
+
         </div>
     );
 }
