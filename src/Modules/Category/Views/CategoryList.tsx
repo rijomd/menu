@@ -4,12 +4,13 @@ import EditNoteIcon from '@mui/icons-material/EditNote';
 
 import { PageOutLine } from "Components/OutLine/PageOutLine";
 import { Table } from 'Components/Table/Table';
-import { Status } from 'Components/UtilsComponents/Status';
+import { Status, ImageTag } from 'Components/UtilsComponents';
 import { TypeRowActions } from 'Components/Table/Components/MenuActions';
 
 import { useAppDispatch, useAppSelector } from "Services/Hook/Hook";
 import { getCategoryListAction, getCategoryAction, insertCategoryAction } from "../Reducer/CategoryAction";
 
+import { api_Image } from 'Services/Config/ApiConstants';
 import { Category } from '../Types/Types';
 import { CategoryForm } from '../Components/CategoryForm';
 
@@ -33,7 +34,10 @@ const CategoryList = () => {
       {
         accessorKey: 'image',
         header: 'Image',
-        minSize: 300
+        minSize: 300,
+        Cell: ({ cell }) => (
+          <ImageTag url={api_Image + cell.getValue<string>()} />
+        ),
       },
       {
         accessorFn: (row) => row.createdAt ? new Date(row.createdAt) : "-",
@@ -68,7 +72,7 @@ const CategoryList = () => {
 
   const handleSubmit = (data: any) => {
     // URL.createObjectURL(data.image) for image preview
-    
+
     dispatch(insertCategoryAction({ ...data, status: data.status === false ? 'InActive' : 'Active' }));
     if (data._id) { setFormData(categoryState.category) }
   }
