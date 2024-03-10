@@ -3,10 +3,10 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { RootState } from 'Services/Store/Store';
 import { fetchApi } from "Services/Request";
+import axios from "Services/Request";
+import { encryptUser } from "Services/Methods/AuthMethods";
 
 import { categoryList, insertCategory } from "../Config/urlConstants";
-import axios from "../../../Services/Request";
-import { encryptUser } from "Services/Methods/AuthMethods";
 
 export const getCategoryAction = (state: RootState) => state.category;
 

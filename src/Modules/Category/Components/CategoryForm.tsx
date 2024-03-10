@@ -13,11 +13,7 @@ export const CategoryForm = ({ initialData, handleSubmit }: { initialData: any, 
             .min(2, 'Too Short!')
             .max(50, 'Too Long!')
             .required('Required'),
-        image: Yup.mixed().required('Image is required').test(
-            'fileSize',
-            'File too large',
-            (value: any) => value && value.size <= 1 * 1024 * 1024
-        ),
+        image: Yup.mixed().required('Image is required')
     });
 
     const formValues: TypeFormValues[] = [

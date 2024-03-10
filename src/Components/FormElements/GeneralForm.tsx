@@ -137,7 +137,7 @@ export const GeneralForm = forwardRef((props: TypeGeneralForm, ref) => {
                                                         name={item.name}
                                                         type={item?.type}
                                                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                                            const file = e.currentTarget?.files && e.currentTarget.files[0];
+                                                            const file = item.fileProps.multiple ? e.currentTarget?.files : e.currentTarget.files && e.currentTarget.files[0];
                                                             setFieldValue(item.name, file)
                                                         }}
                                                         fileProps={item.fileProps}

@@ -23,7 +23,6 @@ export const getUserListAction = createAsyncThunk(
 export const insertUserAction = createAsyncThunk(
     "user/insertUserAction",
     async (body: any, thunkAPI) => {
-        console.log(body);
         try {
             await fetchApi(body, insertUser, 'post', true);
             thunkAPI.dispatch(getUserListAction({}));

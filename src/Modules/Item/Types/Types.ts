@@ -1,11 +1,13 @@
 
 export type Item = {
-    firstName: string;
-    lastName: string;
-    email: string;
-    jobTitle: string;
-    salary: number;
-    startDate?: string;
-    signatureCatchPhrase: string;
-    avatar: string;
+    name: string;
+    image: string;
+    description?: string;
+    status: string;
+    createdAt?: string;
+    sellingPrice: number;
+    quantity: number;
+    offer: number;
+    category: string;
+    location: string;
 };

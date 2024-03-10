@@ -71,8 +71,6 @@ const CategoryList = () => {
   }
 
   const handleSubmit = (data: any) => {
-    // URL.createObjectURL(data.image) for image preview
-
     dispatch(insertCategoryAction({ ...data, status: data.status === false ? 'InActive' : 'Active' }));
     if (data._id) { setFormData(categoryState.category) }
   }
