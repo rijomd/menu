@@ -1,9 +1,9 @@
 
 import { TypeOfMenuPages } from '../index';
-import CottageIcon from '@mui/icons-material/Cottage';
+import BusinessIcon from '@mui/icons-material/Business';
 import { getAuthUser } from 'Services/Methods/AuthMethods';
 
-const icons = { CottageIcon };
+const icons = { BusinessIcon };
 
 export const Masters: TypeOfMenuPages = {
     id: 'mastersGroup',
@@ -15,7 +15,7 @@ export const Masters: TypeOfMenuPages = {
         id: 'masters',
         title: 'Masters',
         type: 'collapse',
-        icon: icons.CottageIcon,
+        icon: icons.BusinessIcon,
         url: "",
         permission: getAuthUser()?.userRole === 'User' ? false : true,
         children: [

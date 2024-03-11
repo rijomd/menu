@@ -91,8 +91,8 @@ export const MemorizedPageOutLine = ({ children, isLoading = false, title, actio
                     <Grid item md={12} xs={12} sx={{ textAlign: 'center', marginTop: 1.5 }}>
                         <Copyright />
                     </Grid>
+                    <ToastContainer />
                 </Grid>
-            <ToastContainer />
 
             </PerfectScrollbar>
         </PageWrapper>
