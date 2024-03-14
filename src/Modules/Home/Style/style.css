@@ -1,0 +1,39 @@
+  .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    margin: 0px;
+    /* Center slide text vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .swiper-slide img {
+    display: block;
+    width:145px;
+    height: 170px;
+    object-fit: contain;
+  }
+  
+  .slide-image:hover {
+    width: 120%; /* Increase width on hover */
+    transition: width 0.3s ease; /* Add smooth transition */
+  }
+
+  .swiper {
+    width: 100%;
+    height: 200px;
+  }
+
+  .swiper-button-next::after, .swiper-button-prev::after {
+    content: "";
+}
+
+.swiper-custom-arrow{
+  min-width: 25px !important;
+  height: 88px;
+  background-color: #fff;
+  color: black;
+}

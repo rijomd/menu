@@ -14,7 +14,7 @@ export const Dashboard: TypeOfMenuPages = {
     children: [
         {
             id: 'dashboard1',
-            title: 'Dashboard',
+            title: 'Home',
             type: 'item',
             icon: icons.CottageIcon,
             url: '/dashboard1',
