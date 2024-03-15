@@ -3,35 +3,27 @@ import { Box, Typography } from "@mui/material";
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper/modules';
-import { FormButtonField } from 'Components/FormElements/FormButtonField';
 
-import { useAppDispatch, useAppSelector } from "Services/Hook/Hook";
+import { FormButtonField } from 'Components/FormElements/FormButtonField';
 import { api_Image } from 'Services/Config/ApiConstants';
 
-import { getHomeAction, getCategoryListAction } from "../Reducer/HomeAction";
-import '../Style/style.css';
+type Props = {
+    getItemByCategory: (id: string) => void;
+    categoryList: any[];
+}
 
-type Props = {}
-
-export const CategoryList = React.memo((props: Props) => {
-    const dispatch = useAppDispatch();
-    const homeState = useAppSelector(getHomeAction);
-    const swiperRef: React.MutableRefObject<any> = React.useRef(null);
-
-    React.useEffect(() => {
-        dispatch(getCategoryListAction({}));
-        return () => { }
-    }, [])
+export const CategoryList = React.memo(({ getItemByCategory, categoryList }: Props) => {
+    const sliderRef: React.MutableRefObject<any> = React.useRef(null);
 
     const goToPrevSlide = () => {
-        if (swiperRef.current && swiperRef.current.swiper) {
-            swiperRef.current.swiper.slidePrev();
+        if (sliderRef.current && sliderRef.current.swiper) {
+            sliderRef.current.swiper.slidePrev();
         }
     };
 
     const goToNextSlide = () => {
-        if (swiperRef.current && swiperRef.current.swiper) {
-            swiperRef.current.swiper.slideNext();
+        if (sliderRef.current && sliderRef.current.swiper) {
+            sliderRef.current.swiper.slideNext();
         }
     };
 
@@ -50,7 +42,7 @@ export const CategoryList = React.memo((props: Props) => {
             <Swiper
                 slidesPerView={6}
                 centeredSlides={false}
-                ref={swiperRef}
+                ref={sliderRef}
                 modules={[Pagination, Navigation]}
                 className="mySwiper"
                 navigation={{
@@ -58,10 +50,10 @@ export const CategoryList = React.memo((props: Props) => {
                     nextEl: '.swiper-button-next'
                 }}
             >
-                {homeState?.CategoryList?.length > 0 && homeState.CategoryList.map((item: any, key: number) => {
-                    return <SwiperSlide key={key}>
+                {categoryList?.length > 0 && categoryList.map((item: any, key: number) => {
+                    return <SwiperSlide key={key} onClick={() => getItemByCategory(item._id)}>
                         <Box>
-                            <img src={api_Image + item.image} className="slide-image"/>
+                            <img src={api_Image + item.image} className="slide-image" />
                             <Typography variant='subtitle1'>{item.name}</Typography>
                         </Box>
                     </SwiperSlide>
