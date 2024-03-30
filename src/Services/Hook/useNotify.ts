@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 
-export const useNotify = (message: string, type: "error" | "success") => {
+export const useNotify = (message: string, type: "error" | "success" | "info") => {
     toast[type](message,
         {
             position: "bottom-right",

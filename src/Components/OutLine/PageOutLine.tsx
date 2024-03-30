@@ -51,7 +51,7 @@ export const MemorizedPageOutLine = ({ children, isLoading = false, title, actio
 
     return (
         <PageWrapper>
-            <PerfectScrollbar component="div">
+            <PerfectScrollbar component="div" className='scroll-y'>
                 <Backdrop
                     sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1, background: "#ffffffe0" }}
                     open={isLoading}

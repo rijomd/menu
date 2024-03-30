@@ -76,7 +76,10 @@ export const fetchApi = async (body: any, url: string, method: string, isNeedToa
     let response: any;
     switch (method.toLowerCase()) {
       case 'get':
-        response = await instance.get(url);
+        const urlParams = new URLSearchParams(body);
+        const paramString = urlParams.toString();
+        const api = Object.keys(body)?.length > 0 ? `${url}?${paramString}` : url;
+        response = await instance.get(api);
         break;
       case 'post':
         response = await instance.post(url, { encryptedCredentials });

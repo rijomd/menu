@@ -39,32 +39,34 @@ export const CategoryList = React.memo(({ getItemByCategory, categoryList }: Pro
     return (
         <>
             <Typography variant='h3' sx={{ fontFamily: 'Basis_Grotesque_Pro' }}>What's on your mind?</Typography>
-            <Swiper
-                slidesPerView={6}
-                centeredSlides={false}
-                ref={sliderRef}
-                modules={[Pagination, Navigation]}
-                className="mySwiper"
-                navigation={{
-                    prevEl: '.swiper-button-prev',
-                    nextEl: '.swiper-button-next'
-                }}
-            >
-                {categoryList?.length > 0 && categoryList.map((item: any, key: number) => {
-                    return <SwiperSlide key={key} onClick={() => getItemByCategory(item._id)}>
-                        <Box>
-                            <img src={api_Image + item.image} className="slide-image" />
-                            <Typography variant='subtitle1'>{item.name}</Typography>
-                        </Box>
-                    </SwiperSlide>
-                })}
-                <Box className="swiper-button-prev">
-                    <CustomArrow direction="prev" onClick={goToPrevSlide} />
-                </Box>
-                <Box className="swiper-button-next">
-                    <CustomArrow direction="next" onClick={goToNextSlide} />
-                </Box>
-            </Swiper>
+            <Box sx={{ height: '200px' }}>
+                <Swiper
+                    slidesPerView={6}
+                    centeredSlides={false}
+                    ref={sliderRef}
+                    modules={[Pagination, Navigation]}
+                    className="mySwiper"
+                    navigation={{
+                        prevEl: '.swiper-button-prev',
+                        nextEl: '.swiper-button-next'
+                    }}
+                >
+                    {categoryList?.length > 0 && categoryList.map((item: any, key: number) => {
+                        return <SwiperSlide key={key} onClick={() => getItemByCategory(item._id)}>
+                            <Box>
+                                <img src={api_Image + item.image} className="slide-image" />
+                                <Typography variant='subtitle1'>{item.name}</Typography>
+                            </Box>
+                        </SwiperSlide>
+                    })}
+                    <Box className="swiper-button-prev">
+                        <CustomArrow direction="prev" onClick={goToPrevSlide} />
+                    </Box>
+                    <Box className="swiper-button-next">
+                        <CustomArrow direction="next" onClick={goToNextSlide} />
+                    </Box>
+                </Swiper>
+            </Box>
         </>
     )
 });
