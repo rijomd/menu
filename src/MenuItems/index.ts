@@ -3,6 +3,7 @@
 import { Dashboard } from './Home/DashBoardPage';
 import { Masters } from './Masters/MastersPage';
 import { Setting } from './Settings/SettingsPage';
+import { Order } from './Order/OrderPage';
 
 type TypeChip = {
     label: string;
@@ -31,7 +32,7 @@ export type TypeOfMenuPages = {
 }
 
 const menuItems = {
-    items: [Dashboard, Masters, Setting]
+    items: [Dashboard, Masters, Setting, Order]
 };
 
 export default menuItems;

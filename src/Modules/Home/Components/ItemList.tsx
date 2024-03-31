@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Box, Typography, Grid } from "@mui/material";
 import { useTheme } from '@mui/material/styles';
+import { useNavigate } from "react-router-dom";
 
 import { api_Image } from 'Services/Config/ApiConstants';
 import { gridSpacing } from 'Services/Store/GridConstant';
 import { useNotify } from 'Services/Hook/useNotify';
-import { useAppDispatch } from "Services/Hook/Hook";
 
 import { FormButtonField } from 'Components/FormElements/FormButtonField';
 import image from 'Assets/Images/noproductfound.png';
@@ -14,6 +14,7 @@ import { ItemSkeleton } from '../Components/ItemSkeleton';
 import { PlaceOrder } from '../Components/PlaceOrder';
 
 import { useInsertOrderMutation } from '../Reducer/RTK';
+import { encryptUser } from 'Services/Methods/AuthMethods';
 
 type Props = {
     items: any[];
@@ -26,8 +27,16 @@ export const ItemList = ({ items, getAllItem, isLoading, settingsList }: Props) 
     const theme = useTheme();
     const [cartData, setCartData] = useState<any>([]);
     const [postData, { data }] = useInsertOrderMutation();
+    const navigate = useNavigate();
 
-    console.log(data);
+    useEffect(() => {
+        if (data) {
+            useNotify(data?.message, 'success');
+            navigate('/myOrders');
+        }
+        return () => { }
+    }, [data])
+
 
     const placeOrder = (item: any) => {
         const exist = cartData.find((x: any) => x._id === item._id);
@@ -80,6 +89,7 @@ export const ItemList = ({ items, getAllItem, isLoading, settingsList }: Props) 
                 totalItems: totalCount,
                 itemList: cartData
             }
+            const encryptedCredentials = encryptUser(orderData);
 
             if (settingsList?.length > 0) {
                 if (settingsList[0]?.amountLimit < totalAmount) {
@@ -92,13 +102,14 @@ export const ItemList = ({ items, getAllItem, isLoading, settingsList }: Props) 
                     useNotify(`Exceeded category limit , only select items from one category`, 'info');
                 }
                 else {
-                    await postData(orderData).unwrap();
+                    await postData({ encryptedCredentials }).unwrap();
                 }
             }
             else {
+                await postData({ encryptedCredentials }).unwrap();
             }
-        } catch (error) {
-            console.error('Error occurred:', error);
+        } catch (error: any) {
+            useNotify(error?.data?.message, 'error');
         }
     }
 

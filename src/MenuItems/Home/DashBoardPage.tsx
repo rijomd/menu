@@ -20,6 +20,15 @@ export const Dashboard: TypeOfMenuPages = {
             url: '/dashboard1',
             breadcrumbs: false,
             permission: true
+        },
+        {
+            id: 'myOrder',
+            title: 'My Order',
+            type: 'item',
+            icon: icons.CottageIcon,
+            url: '/myOrders',
+            breadcrumbs: false,
+            permission: true
         }
     ]
 };

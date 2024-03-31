@@ -6,6 +6,7 @@ import item from './Item';
 import user from './User';
 import location from './Location';
 import settings from './Settings';
+import orders from './Order';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const containers: any = {
@@ -15,7 +16,8 @@ const containers: any = {
     item: item,
     user: user,
     location: location,
-    settings: settings
+    settings: settings,
+    orders: orders
 };
 
 export default containers;
