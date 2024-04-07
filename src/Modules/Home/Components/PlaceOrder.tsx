@@ -115,25 +115,28 @@ export const PlaceOrder = ({ cartData, removeItem, count, order }: Props) => {
                     <CustomArrow direction="next" onClick={goToNextSlide} />
                 </Box>
             </Swiper>
-            {cartData?.length > 0 && <table style={{ textAlign: 'justify', marginTop: '8px' }}>
-                <thead>
-                    <tr>
-                        <td>Total Items</td>
-                        <th style={{ color: theme.palette.secondary.dark }}> {cartData.reduce((acc, item) => {
-                            return acc = acc + item.count || 0
-                        }, 0)}</th>
-                    </tr>
-                    <tr>
-                        <td>Total Amount</td>
-                        <th style={{ color: theme.palette.secondary.dark }}> ₹{formatNumber(cartData.reduce((acc, item) => {
-                            return acc = acc + item.totalPrize || 0
-                        }, 0))}</th>
-                    </tr>
-                    <tr>
-                        <td><FormButtonField onClick={order}>Order</FormButtonField></td>
-                    </tr>
-                </thead>
-            </table>}
+            {cartData?.length > 0 && <Box sx={{ width: '100%', display: 'flex', justifyContent: 'end' }}>
+                <table style={{ textAlign: 'end', marginTop: '8px', width: '50%' }}>
+                    <thead>
+                        <tr>
+                            <td>Total Items</td>
+                            <th style={{ color: theme.palette.secondary.dark }}> {cartData.reduce((acc, item) => {
+                                return acc = acc + item.count || 0
+                            }, 0)}</th>
+                        </tr>
+                        <tr>
+                            <td>Total Amount</td>
+                            <th style={{ color: theme.palette.secondary.dark }}> ₹{formatNumber(cartData.reduce((acc, item) => {
+                                return acc = acc + item.totalPrize || 0
+                            }, 0))}</th>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td ><FormButtonField onClick={order} sx={{ textTransform: 'capitalize', width: '80%' }}>Order</FormButtonField></td>
+                        </tr>
+                    </thead>
+                </table>
+            </Box>}
 
         </PageWrapper>
     )

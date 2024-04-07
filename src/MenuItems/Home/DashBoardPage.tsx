@@ -1,13 +1,15 @@
 
 import { TypeOfMenuPages } from '../index';
 import CottageIcon from '@mui/icons-material/Cottage';
+import DvrIcon from '@mui/icons-material/Dvr';
+import { getAuthUser } from 'Services/Methods/AuthMethods';
 
-const icons = { CottageIcon };
+const icons = { CottageIcon, DvrIcon };
+const user = getAuthUser();
 
 export const Dashboard: TypeOfMenuPages = {
     id: 'home',
     title: 'Home',
-    // caption: 'Home page',
     type: 'group',
     url: "",
     permission: true,
@@ -25,10 +27,10 @@ export const Dashboard: TypeOfMenuPages = {
             id: 'myOrder',
             title: 'My Order',
             type: 'item',
-            icon: icons.CottageIcon,
+            icon: icons.DvrIcon,
             url: '/myOrders',
-            breadcrumbs: false,
-            permission: true
+            breadcrumbs: true,
+            permission: user?.userRole === 'User' ? true : false,
         }
     ]
 };

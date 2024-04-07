@@ -1,9 +1,9 @@
 
 import { TypeOfMenuPages } from '../index';
-import SettingsIcon from '@mui/icons-material/Settings';
+import DvrIcon from '@mui/icons-material/Dvr';
 import { getAuthUser } from 'Services/Methods/AuthMethods';
 
-const icons = { SettingsIcon };
+const icons = { DvrIcon };
 const user = getAuthUser();
 
 export const Order: TypeOfMenuPages = {
@@ -16,7 +16,7 @@ export const Order: TypeOfMenuPages = {
         id: 'order',
         title: 'Order',
         type: 'collapse',
-        icon: icons.SettingsIcon,
+        icon: icons.DvrIcon,
         url: "",
         permission: user?.userRole === 'User' ? false : true,
         children: [

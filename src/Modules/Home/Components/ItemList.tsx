@@ -31,7 +31,7 @@ export const ItemList = ({ items, getAllItem, isLoading, settingsList }: Props) 
 
     useEffect(() => {
         if (data) {
-            useNotify(data?.message, 'success');
+            useNotify("Ordered successfully", 'success');
             navigate('/myOrders');
         }
         return () => { }
@@ -98,7 +98,7 @@ export const ItemList = ({ items, getAllItem, isLoading, settingsList }: Props) 
                 else if (settingsList[0]?.countLimit < totalCount) {
                     useNotify(`Exceeded count limit ${settingsList[0].countLimit}`, 'info');
                 }
-                else if (settingsList[0]?.multipleCategorySelection && categoryCount > 1) {
+                else if (!settingsList[0]?.multipleCategorySelection && categoryCount > 1) {
                     useNotify(`Exceeded category limit , only select items from one category`, 'info');
                 }
                 else {

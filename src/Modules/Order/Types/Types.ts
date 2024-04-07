@@ -4,8 +4,9 @@ export type Order = {
     totalAmount: number;
     totalItems: number;
     status: string;
-    createdAt?: string;
+    createdAt: string;
     cancelComment: string;
     userName: string;
     updatedAt: string;
+    itemList: string[];
 };

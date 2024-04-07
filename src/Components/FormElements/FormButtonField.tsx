@@ -15,7 +15,7 @@ export type TypesFormButtonField = {
 };
 
 export const FormButtonField: React.FC<TypesFormButtonField> = (props) => {
-  const { fullWidth = true, children, onClick = () => { }, disabled, color, label, variant = 'contained', ...others } = props;
+  const { fullWidth = true, children, onClick = () => { }, disabled, loading, color, label, variant = 'contained', ...others } = props;
 
   return (
     <Tooltip title={label}>
@@ -23,10 +23,11 @@ export const FormButtonField: React.FC<TypesFormButtonField> = (props) => {
         variant={variant}
         size="small"
         color={color || "secondary"}
-        endIcon={disabled && <CircularProgress />}
+        endIcon={loading && <CircularProgress />}
         fullWidth={fullWidth}
         onClick={onClick}
         disabled={disabled}
+        sx={{ textTransform: 'capitalize' }}
         {...others}
       >
         {children}

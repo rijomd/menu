@@ -4,9 +4,9 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from 'Services/Store/Store';
 import { fetchApi } from "Services/Request";
 
-import { orderList } from "../Config/urlConstants";
+import { orderList, insertOrder } from "../Config/urlConstants";
 
-export const getOrderState = (state: RootState) => state.order;
+export const getOrderState = (state: RootState) => state.orders;
 
 export const getOrderListAction = createAsyncThunk(
     "Order/getOrderListAction",
@@ -14,6 +14,18 @@ export const getOrderListAction = createAsyncThunk(
         try {
             const data = await fetchApi(body, orderList, 'get', false);
             return data?.['OrderList'];
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+);
+
+export const insertOrderAction = createAsyncThunk(
+    "Order/insertOrderAction",
+    async (body: any, thunkAPI) => {
+        try {
+            await fetchApi(body, insertOrder, 'post', false);
+            thunkAPI.dispatch(getOrderListAction({}));
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error);
         }
