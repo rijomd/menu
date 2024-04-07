@@ -22,6 +22,10 @@ export const TableComponent = React.memo(({ list }: { list: Settings[] }) => {
                 header: 'Count Limit',
             },
             {
+                accessorKey: 'orderLimit',
+                header: 'Order Limit',
+            },
+            {
                 accessorKey: 'multipleCategorySelection',
                 header: 'Multiple',
                 Cell: ({ cell }) => cell.getValue<boolean>() === true ? 'Yes' : 'No',

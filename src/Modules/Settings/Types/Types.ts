@@ -6,4 +6,5 @@ export type Settings = {
     _id?: string;
     updatedAt?: string;
     location: string;
+    orderLimit: number;
 };

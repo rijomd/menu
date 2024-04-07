@@ -20,6 +20,7 @@ const initialState: CounterState = {
         location: '',
         amountLimit: 0,
         countLimit: 0,
+        orderLimit:0,
         multipleCategorySelection: false,
     }
 };

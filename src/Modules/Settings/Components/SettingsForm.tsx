@@ -18,6 +18,9 @@ export const SettingsForm = ({ handleSubmit, initialData, }: { handleSubmit: (da
         countLimit: Yup.number()
             .required('Required')
             .max(20, 'Order item counts at most 20 possible'),
+        orderLimit: Yup.number()
+            .required('Required')
+            .max(10, 'Order per day at most 10 is possible'),
     });
 
     const formValues: TypeFormValues[] = [
@@ -31,6 +34,13 @@ export const SettingsForm = ({ handleSubmit, initialData, }: { handleSubmit: (da
         {
             name: 'countLimit',
             label: 'Count Limit',
+            type: 'number',
+            required: true,
+            grid: { largeDevice: 6, mediumDevice: 6 }
+        },
+        {
+            name: 'orderLimit',
+            label: 'Order Limit per day',
             type: 'number',
             required: true,
             grid: { largeDevice: 6, mediumDevice: 6 }
