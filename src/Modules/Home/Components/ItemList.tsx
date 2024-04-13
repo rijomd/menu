@@ -26,11 +26,14 @@ type Props = {
 export const ItemList = ({ items, getAllItem, isLoading, settingsList }: Props) => {
     const theme = useTheme();
     const [cartData, setCartData] = useState<any>([]);
+    const [orderDisabled, setOrderDisabled] = useState(false);
+
     const [postData, { data }] = useInsertOrderMutation();
     const navigate = useNavigate();
 
     useEffect(() => {
         if (data) {
+            setOrderDisabled(false);
             useNotify("Ordered successfully", 'success');
             navigate('/myOrders');
         }
@@ -40,7 +43,16 @@ export const ItemList = ({ items, getAllItem, isLoading, settingsList }: Props) 
 
     const placeOrder = (item: any) => {
         const exist = cartData.find((x: any) => x._id === item._id);
-        if (!exist) {
+        if (exist) {
+            useNotify('Item already exist', 'info');
+        }
+        else if (item.status === "InActive") {
+            useNotify('Item not available', 'info');
+        }
+        else if (item.quantity === 0) {
+            useNotify('Item not available', 'info');
+        }
+        else {
             const data = [...cartData];
             const newItem = {
                 ...item,
@@ -50,9 +62,6 @@ export const ItemList = ({ items, getAllItem, isLoading, settingsList }: Props) 
             }
             data.push(newItem);
             setCartData(data);
-        }
-        else {
-            useNotify('Item already exist', 'info');
         }
     }
 
@@ -102,14 +111,17 @@ export const ItemList = ({ items, getAllItem, isLoading, settingsList }: Props) 
                     useNotify(`Exceeded category limit , only select items from one category`, 'info');
                 }
                 else {
+                    setOrderDisabled(true)
                     await postData({ encryptedCredentials }).unwrap();
                 }
             }
             else {
+                setOrderDisabled(true)
                 await postData({ encryptedCredentials }).unwrap();
             }
         } catch (error: any) {
             useNotify(error?.data?.message, 'error');
+            setOrderDisabled(false);
         }
     }
 
@@ -120,6 +132,7 @@ export const ItemList = ({ items, getAllItem, isLoading, settingsList }: Props) 
                 removeItem={removeItem}
                 count={count}
                 order={order}
+                orderDisabled={orderDisabled}
             />}
 
             <Box sx={{ display: 'flex', justifyContent: 'space-between', margin: '1rem 0rem' }}>
@@ -143,6 +156,7 @@ export const ItemList = ({ items, getAllItem, isLoading, settingsList }: Props) 
                             <img src={api_Image + item.image} className='truncated-image' />
                             <Box sx={{ padding: '4px' }}>
                                 <Typography variant='subtitle1' className='truncated-link'>{item.name}</Typography>
+                                <Typography variant='body1' >Items  {item.quantity}</Typography>
                                 <Box sx={{ display: 'flex' }}>
                                     <Typography variant='h4' >₹{Math.round(item.sellingPrice - ((item.sellingPrice * item.offer) / 100))}</Typography>
                                     <Typography variant='body1' sx={{ textDecoration: 'line-through', margin: '0px 8px' }}>₹{item.sellingPrice}</Typography>

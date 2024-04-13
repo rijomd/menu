@@ -9,7 +9,7 @@ export const UserSection = () => {
             sx: {
                 textTransform: 'uppercase'
             },
-            children: `${name.split(' ')[0][0]}${name.split(' ')[0][3]}`,
+            children: `${name?.split(' ')[0][0]}${name?.split(' ')[0][3]}`,
         };
     }
 
@@ -18,7 +18,7 @@ export const UserSection = () => {
             <Box >
                 <Box sx={{ justifyContent: 'space-between', display: 'flex' }}>
                     <Typography variant='h6' color='Background'>{'Name : '}</Typography>
-                    <Typography variant='h6' color='Background'>{user.name}</Typography>
+                    <Typography variant='h6' color='Background'>{user?.name}</Typography>
                 </Box>
                 <Box sx={{ justifyContent: 'space-between', display: 'flex' }}>
                     <Typography variant='h6' color='Background'>{'Location : '}</Typography>
@@ -26,7 +26,7 @@ export const UserSection = () => {
                 </Box>
             </Box>
         }>
-            <Avatar {...stringAvatar(user.name)} />
+            <Avatar {...stringAvatar(user?.name)} />
         </Tooltip>
     )
 }

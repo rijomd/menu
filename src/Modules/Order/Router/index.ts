@@ -1,5 +1,4 @@
 import { getAuthUser } from 'Services/Methods/AuthMethods';
-
 const userRole = getAuthUser()?.userRole;
 
 const Routes = [
@@ -16,6 +15,13 @@ const Routes = [
         elementPath: "MyOrders",
         auth: true,
         permission: userRole === 'User' ? true : false,
+    },
+    {
+        name: "Order",
+        path: "/billDetails",
+        elementPath: "OrderReport",
+        auth: true,
+        permission: userRole !== 'User' ? true : false,
     },
 ]
 

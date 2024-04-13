@@ -26,9 +26,10 @@ export const getAuthUser = () => {
       }
       return JSON.parse(decryptedData);
     }
+    else return {}
   } catch (error) {
     console.error('Error decrypting data:', error);
-    return null;
+    return {};
   }
 }
 

@@ -1,13 +1,10 @@
 import React from 'react';
 import { type MRT_ColumnDef } from 'material-react-table';
-import EditNoteIcon from '@mui/icons-material/EditNote';
 import dayjs from 'dayjs';
 
 import { PageOutLine } from "Components/OutLine/PageOutLine";
-import { Modal } from 'Components/Modals/Modal';
 import { Status } from 'Components/UtilsComponents';
 import { Table } from 'Components/Table/Table';
-import { TypeActions } from 'Components/Table/Components/TableActions';
 
 import { useAppDispatch, useAppSelector } from "Services/Hook/Hook";
 import { getAuthUser } from 'Services/Methods/AuthMethods';
@@ -18,7 +15,7 @@ import { ItemList } from '../Components/ItemList';
 
 type Props = {}
 
-const TableComponent = React.memo(({ setOpenModal }: { setOpenModal: (data: any) => void }) => {
+const TableComponent = React.memo(() => {
     const orderState = useAppSelector(getOrderState);
     const dispatch = useAppDispatch();
 
@@ -28,20 +25,6 @@ const TableComponent = React.memo(({ setOpenModal }: { setOpenModal: (data: any)
     const onChangeStatus = (data: string, id: string) => {
         dispatch(insertOrderAction({ _id: id, status: data }));
     }
-
-    const actions = React.useMemo<TypeActions[]>(() => [
-        {
-            name: 'Add', onClick: () => {
-                setOpenModal({
-                    open: true, data: {
-                        ...orderState.order,
-                        location: user?.location
-                    }
-                })
-            },
-            icon: <EditNoteIcon />
-        },
-    ], [])
 
     const columns = React.useMemo<MRT_ColumnDef<Order>[]>(
         () => [
@@ -93,7 +76,6 @@ const TableComponent = React.memo(({ setOpenModal }: { setOpenModal: (data: any)
     return (<Table
         columns={columns}
         data={orderState.orderList}
-        actions={actions}
         exportOptionsField={exportOptionsField}
         isEnableExportFileName='Orders'
         renderExpandPanel={renderExpandPanel}
@@ -101,40 +83,9 @@ const TableComponent = React.memo(({ setOpenModal }: { setOpenModal: (data: any)
     />);
 }, () => true);
 
-const FormComponent = React.memo(({ openModal, setOpenModal }: { openModal: any, setOpenModal: (data: any) => void }) => {
-    const formRef: React.MutableRefObject<any> = React.useRef(null);
-    const dispatch = useAppDispatch();
-
-    const handleSubmit = (data: any) => {
-        dispatch(insertOrderAction({ ...data, status: data.status === false ? 'InActive' : 'Active' })).then(res => {
-            if (res) { setOpenModal({ open: false, data: {}, }) }
-        })
-    }
-
-    const onAction = (name: string) => {
-        if (name === 'success') {
-            formRef.current.handleSubmit()
-        }
-        else {
-            formRef.current.handleClear();
-            setOpenModal({ open: false, data: {}, })
-        }
-    }
-
-    return (
-        <Modal title="Order Details" open={openModal.open}
-            handleClose={() => setOpenModal({ open: false, data: {}, })}
-            disableBackgroundClose
-            onAction={onAction}>
-            {/* <ItemForm formRef={formRef} handleSubmit={handleSubmit} initialData={openModal.data} /> */}
-            <></>
-        </Modal>
-    );
-}, () => true);
 
 const OrderList = ({ }: Props) => {
     const dispatch = useAppDispatch();
-    const [openModal, setOpenModal] = React.useState(false);
 
     React.useEffect(() => {
         dispatch(getOrderListAction({}));
@@ -143,14 +94,7 @@ const OrderList = ({ }: Props) => {
 
     return (
         <PageOutLine>
-            <TableComponent
-                setOpenModal={(data) => { setOpenModal(data) }}
-            />
-            <FormComponent
-                setOpenModal={(data) => { setOpenModal(data) }}
-                openModal={openModal}
-            />
-
+            <TableComponent />
         </PageOutLine>
     )
 }

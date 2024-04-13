@@ -10,6 +10,7 @@ import { ItemList } from '../Components/ItemList';
 
 import { getHomeAction, getCategoryListAction, getItemListAction, getSettingListAction } from "../Reducer/HomeAction";
 import '../Style/style.css';
+import { GenerateBill } from '../Components/GenerateBill';
 
 const DashBoard = () => {
     const user = getAuthUser();
@@ -38,7 +39,7 @@ const DashBoard = () => {
                     <CategoryList getItemByCategory={getItemByCategory} categoryList={homeState.CategoryList} />
                     <ItemList items={homeState.itemList} getAllItem={getAllItem} isLoading={homeState.loading === 'loading'} settingsList={homeState.settingsList} />
                 </Box> :
-                <></>}
+                <GenerateBill />}
         </PageOutLine>
     )
 }

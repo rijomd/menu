@@ -23,7 +23,7 @@ export const FormButtonField: React.FC<TypesFormButtonField> = (props) => {
         variant={variant}
         size="small"
         color={color || "secondary"}
-        endIcon={loading && <CircularProgress />}
+        endIcon={loading && <CircularProgress sx={{ width: '20px', height: '20px' }} />}
         fullWidth={fullWidth}
         onClick={onClick}
         disabled={disabled}

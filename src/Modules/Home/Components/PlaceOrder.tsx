@@ -14,9 +14,10 @@ type Props = {
     removeItem: (data: any) => void;
     count: (data: any, name: string) => void;
     order: () => void;
+    orderDisabled?: boolean;
 }
 
-export const PlaceOrder = ({ cartData, removeItem, count, order }: Props) => {
+export const PlaceOrder = ({ cartData, removeItem, count, order, orderDisabled }: Props) => {
     const theme = useTheme();
     const sliderRef: React.MutableRefObject<any> = React.useRef(null);
     const [isSticky, setIsSticky] = React.useState(false);
@@ -132,7 +133,16 @@ export const PlaceOrder = ({ cartData, removeItem, count, order }: Props) => {
                         </tr>
                         <tr>
                             <td></td>
-                            <td ><FormButtonField onClick={order} sx={{ textTransform: 'capitalize', width: '80%' }}>Order</FormButtonField></td>
+                            <td >
+                                <FormButtonField
+                                    disabled={orderDisabled}
+                                    onClick={order}
+                                    loading={orderDisabled}
+                                    sx={{ textTransform: 'capitalize', width: '80%' }}
+                                >
+                                    Order
+                                </FormButtonField>
+                            </td>
                         </tr>
                     </thead>
                 </table>
