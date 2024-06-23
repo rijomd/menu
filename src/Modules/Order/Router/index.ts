@@ -16,13 +16,6 @@ const Routes = [
         auth: true,
         permission: userRole === 'User' ? true : false,
     },
-    {
-        name: "Order",
-        path: "/billDetails",
-        elementPath: "OrderReport",
-        auth: true,
-        permission: userRole !== 'User' ? true : false,
-    },
 ]
 
 export default Routes;

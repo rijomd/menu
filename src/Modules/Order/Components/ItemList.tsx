@@ -3,7 +3,8 @@ import { Typography, Box } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import KeyboardTabIcon from '@mui/icons-material/KeyboardTab';
 
-import { FormCheckBoxField } from "Components/FormElements"
+import { FormButtonField, FormCheckBoxField } from "Components/FormElements"
+import dayjs from "dayjs";
 
 export const ItemList = ({ data, onChangeStatus, role = 'User' }:
     { data: any, onChangeStatus: (data: string, id: string,) => void, role?: string }) => {
@@ -13,7 +14,7 @@ export const ItemList = ({ data, onChangeStatus, role = 'User' }:
         <table>
             <thead>
                 <tr>
-                    <td colSpan={4}>
+                    <td colSpan={5}>
                         <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
                             <MenuIcon color="secondary" />
                             <Typography variant="body1"> Item Details</Typography>
@@ -26,9 +27,15 @@ export const ItemList = ({ data, onChangeStatus, role = 'User' }:
                     <tr key={key} style={{ height: '40px' }}>
                         <th>{key + 1}.</th>
                         <th colSpan={2}>{item.name}</th>
-                        <th>  ₹{item.sellingPrice}</th>
+                        <th style={{ paddingLeft: '8px' }}>  {item.count} x {item.sellingPrice}</th>
+                        <th style={{ paddingLeft: '8px' }}>  ₹{item.totalPrize} <Typography variant="caption">{item.offer !== 0 && `(${item.offer}% off)`}</Typography></th>
                     </tr>
                 ))}
+                <tr>
+                    <td colSpan={5} align="right">
+                        Modified at :- {dayjs(data.updatedAt).format('h:mm A')}
+                    </td>
+                </tr>
             </tbody>
             {(data.status !== "Closed") && <tbody>
                 <tr>
@@ -49,7 +56,11 @@ export const ItemList = ({ data, onChangeStatus, role = 'User' }:
                         </Box>
                     </td>
                     <td>
-                        <KeyboardTabIcon color="secondary" onClick={() => { status === '' ? '' : onChangeStatus(status, data?._id); setStatus('') }} />
+                        <FormButtonField label="Submit" onClick={() => { status === '' ? '' : onChangeStatus(status, data?._id); setStatus('') }}>
+                            <KeyboardTabIcon
+                                sx={{ cursor: 'pointer' }}
+                            />
+                        </FormButtonField>
                     </td>
                 </tr>
             </tbody>}

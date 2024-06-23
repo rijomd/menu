@@ -28,7 +28,7 @@ const TableComponent = React.memo(({ setOpenModal }: { setOpenModal: (data: any)
         () => [
             {
                 accessorKey: 'name',
-                header: 'Email',
+                header: 'Name',
             },
             {
                 accessorKey: 'code',

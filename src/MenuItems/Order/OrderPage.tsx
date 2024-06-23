@@ -29,15 +29,6 @@ export const Order: TypeOfMenuPages = {
                 permission: true,
                 children: [],
             },
-            {
-                id: 'billDetails',
-                title: 'Order Reports',
-                type: 'item',
-                url: '/billDetails',
-                breadcrumbs: true,
-                permission: true,
-                children: [],
-            },
         ]
     }]
 };

@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { Box, Grid, IconButton, Typography} from "@mui/material";
+import { Box, Grid, IconButton, Typography } from "@mui/material";
 
 import * as Yup from "yup";
 import { Formik } from "formik";
@@ -43,8 +43,8 @@ export const AuthLogin = ({ handleSubmit }: { handleSubmit: (data: any) => any; 
       <Grid container direction="column" justifyContent="center">
         <Formik
           initialValues={{
-            email: "Admin@gmail.com",
-            password: "Admin@7034",
+            email: "your@smail.com",
+            password: "password",
           }}
           validationSchema={Yup.object().shape({
             email: Yup.string()
