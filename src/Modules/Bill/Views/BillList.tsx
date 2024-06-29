@@ -34,6 +34,11 @@ const BillList = () => {
                 size: 300
             },
             {
+                accessorKey: 'location',
+                header: 'Location',
+                size: 300
+            },
+            {
                 accessorFn: (row) => row.closedOn ? new Date(row.closedOn) : "-",
                 id: 'closedOn',
                 header: 'Closed On',
