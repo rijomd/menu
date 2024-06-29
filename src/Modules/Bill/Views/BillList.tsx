@@ -7,9 +7,12 @@ import { Box, Typography } from '@mui/material';
 import { Bill } from '../Types/Types';
 import { getBillListAction, getBillState } from '../Reducer/BillAction';
 
-import { useAppDispatch, useAppSelector } from 'Services/Hook/Hook';
 import { Table } from 'Components/Table/Table';
+import { PageOutLine } from 'Components/OutLine/PageOutLine';
+
+import { useAppDispatch, useAppSelector } from 'Services/Hook/Hook';
 import { api_Image } from 'Services/Config/ApiConstants';
+
 import { downloadFile } from 'Utils/DownLoadFile';
 
 const BillList = () => {
@@ -54,10 +57,12 @@ const BillList = () => {
         ],
         [],);
     return (
-        <Table
-            columns={columns}
-            data={billState.billList}
-        />
+        <PageOutLine>
+            <Table
+                columns={columns}
+                data={billState.billList}
+            />
+        </PageOutLine>
     )
 }
 export default BillList;
